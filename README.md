@@ -1,1 +1,1 @@
-# Toptal Social Share Plugin
+# Yet Another Social Share Plugin
