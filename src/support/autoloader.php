@@ -22,7 +22,6 @@ namespace YetAnotherSocialShare\Support;
 function yass_autoload_files( $src_root_dir ) {
 
 	$filenames = array(
-//		 'custom/main',
 		 'custom/options-page',
 	);
 
