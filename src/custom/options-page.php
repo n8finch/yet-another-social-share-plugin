@@ -22,7 +22,8 @@ function yass_example_theme_menu() {
 		'yass Theme',                    // The text of the menu in the administrator's sidebar
 		'administrator',                    // What roles are able to access the menu
 		'yass_theme_menu',                // The ID used to bind submenu items to this menu
-		'yass_theme_display'                // The callback function used to render this menu
+		'yass_theme_display',                // The callback function used to render this menu
+		'dashicons-share'
 	);
 
 } // end yass_example_theme_menu
@@ -36,11 +37,11 @@ function yass_theme_display() {
 	<div class="wrap">
 
 		<div id="icon-themes" class="icon32"></div>
-		<h2><?php _e( 'yass Theme Options', 'yass' ); ?></h2>
+		<h2><?php _e( 'yass Theme Options', 'ya_social_share' ); ?></h2>
 		<?php settings_errors(); ?>
 
 
-		<h2 class="nav-tab-wrapper"> <?php _e( 'Sharing Options', 'yass' ); ?> </h2>
+		<h2 class="nav-tab-wrapper"> <?php _e( 'Sharing Options', 'ya_social_share' ); ?> </h2>
 
 
 		<form method="post" action="options.php">
@@ -82,7 +83,6 @@ function yass_theme_default_input_options() {
 } // end yass_theme_default_input_options
 
 
-
 /**
  * Initializes the theme's input example by registering the Sections,
  * Fields, and Settings. This particular group of options is used to demonstration
@@ -96,60 +96,60 @@ function yass_theme_initialize_input_examples() {
 	} // end if
 	add_settings_section(
 		'input_examples_section',
-		__( 'Input Examples', 'yass' ),
+		__( 'Input Examples', 'ya_social_share' ),
 		'yass_input_examples_callback',
 		'yass_theme_input_examples'
 	);
 
 
-
 	add_settings_field(
 		'yass-activate-social-sharing',
-		__( 'Actiavte Social Sharing?', 'yass' ),
+		__( 'Actiavte Social Sharing?', 'ya_social_share' ),
 		__NAMESPACE__ . '\yass_actiavte_sharing',
 		'yass_theme_input_examples',
 		'input_examples_section'
 	);
 
-//	add_settings_field(
-//		'Input Element',
-//		__( 'Input Element', 'yass' ),
-//		'yass_input_element_callback',
-//		'yass_theme_input_examples',
-//		'input_examples_section'
-//	);
-
 	add_settings_field(
-		'Textarea Element',
-		__( 'Textarea Element', 'yass' ),
-		'yass_textarea_element_callback',
+		'yass-display-on-post-types',
+		__( 'Choose post types to display on', 'ya_social_share' ),
+		__NAMESPACE__ . '\yass_display_on_post_types',
 		'yass_theme_input_examples',
 		'input_examples_section'
 	);
 
 	add_settings_field(
-		'Checkbox Element',
-		__( 'Checkbox Element', 'yass' ),
-		'yass_checkbox_element_callback',
+		'yass-select-sharing-networks',
+		__( 'Select networks to display, drag to change order.', 'ya_social_share' ),
+		__NAMESPACE__ . '\yass_select_sharing_networks',
 		'yass_theme_input_examples',
 		'input_examples_section'
 	);
 
 	add_settings_field(
-		'Radio Button Elements',
-		__( 'Radio Button Elements', 'yass' ),
-		'yass_radio_element_callback',
+		'yass-select-sharing-button-size',
+		__( 'Select Icon Size', 'ya_social_share' ),
+		__NAMESPACE__ . '\yass_select_sharing_button_size',
 		'yass_theme_input_examples',
 		'input_examples_section'
 	);
 
 	add_settings_field(
-		'Select Element',
-		__( 'Select Element', 'yass' ),
-		'yass_select_element_callback',
+		'yass-select-sharing-button-color',
+		__( 'Select Icon Colors', 'ya_social_share' ),
+		__NAMESPACE__ . '\yass_select_sharing_button_color',
 		'yass_theme_input_examples',
 		'input_examples_section'
 	);
+
+	add_settings_field(
+		'yass-select-sharing-button-location',
+		__( 'Where do you want to display your social sharing buttons?', 'ya_social_share' ),
+		__NAMESPACE__ . '\yass_select_sharing_button_location',
+		'yass_theme_input_examples',
+		'input_examples_section'
+	);
+
 
 	register_setting(
 		'yass_theme_input_examples',
@@ -168,7 +168,7 @@ add_action( 'admin_init', 'yass_theme_initialize_input_examples' );
  * in the add_settings_section function.
  */
 function yass_general_options_callback() {
-	echo '<p>' . __( 'Select which areas of content you wish to display.', 'yass' ) . '</p>';
+	echo '<p>' . __( 'Select which areas of content you wish to display.', 'ya_social_share' ) . '</p>';
 } // end yass_general_options_callback
 /**
  * This function provides a simple description for the Social Options page.
@@ -177,7 +177,7 @@ function yass_general_options_callback() {
  * in the add_settings_section function.
  */
 function yass_social_options_callback() {
-	echo '<p>' . __( 'Provide the URL to the social networks you\'d like to display.', 'yass' ) . '</p>';
+	echo '<p>' . __( 'Provide the URL to the social networks you\'d like to display.', 'ya_social_share' ) . '</p>';
 } // end yass_general_options_callback
 /**
  * This function provides a simple description for the Input Examples page.
@@ -186,7 +186,7 @@ function yass_social_options_callback() {
  * in the add_settings_section function.
  */
 function yass_input_examples_callback() {
-	echo '<p>' . __( 'Provides examples of the five basic element types.', 'yass' ) . '</p>';
+	echo '<p>' . __( 'Provides examples of the five basic element types.', 'ya_social_share' ) . '</p>';
 } // end yass_general_options_callback
 /* ------------------------------------------------------------------------ *
  * Field Callbacks
@@ -210,52 +210,131 @@ function yass_actiavte_sharing() {
 	echo $html;
 
 } // end yass_actiavte_sharing
-function yass_textarea_element_callback() {
 
-	$options = get_option( 'yass_theme_input_examples' );
+function yass_display_on_post_types() {
 
-
-	// Render the output
-	echo '<textarea id="textarea_example" name="yass_theme_input_examples[textarea_example]" rows="5" cols="50">' . $options['textarea_example'] . '</textarea>';
-
-} // end yass_textarea_element_callback
-function yass_checkbox_element_callback() {
 	$options = get_option( 'yass_theme_input_examples' );
 
 
 	$html = '<input type="checkbox" id="checkbox_example" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
 	$html .= '&nbsp;';
-	$html .= '<label for="checkbox_example">This is an example of a checkbox</label>';
+	$html .= '<label for="checkbox_example">posts </label>';
+
+	$html .= '<input type="checkbox" id="checkbox_example" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_example">pages </label>';
+
+	$html .= '<input type="checkbox" id="checkbox_example" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_example">custom </label>';
+
+	//TODO query for all active post types and display in place of all these.
 
 	echo $html;
-} // end yass_checkbox_element_callback
-function yass_radio_element_callback() {
+
+} // end yass_display_on_post_types
+
+
+function yass_select_sharing_networks() {
+
+	$options = get_option( 'yass_theme_input_examples' );
+
+	$html = '<table><tbody id="sortable">
+			  <tr id="yass-table-header" class="ui-state-disabled"><th>Order</th><th>Network</th><th>Active</th></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 1</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 2</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 3</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 4</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 5</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 6</td><td>^</td></tr>
+			  <tr class="ui-state-default"><td>^</td><td>Item 7</td><td>^</td></tr>
+			</tbody></table>';
+
+
+	$html .= '<input type="checkbox" id="checkbox_example" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_example">Check this box to activate sharing</label>';
+
+	echo $html;
+
+} // end yass_select_sharing_networks
+
+
+function yass_select_sharing_button_size() {
 	$options = get_option( 'yass_theme_input_examples' );
 
 
 	$html = '<input type="radio" id="radio_example_one" name="yass_theme_input_examples[radio_example]" value="1"' . checked( 1, $options['radio_example'], false ) . '/>';
 	$html .= '&nbsp;';
-	$html .= '<label for="radio_example_one">Option One</label>';
+	$html .= '<label for="radio_example_one">Small</label>';
 	$html .= '&nbsp;';
 	$html .= '<input type="radio" id="radio_example_two" name="yass_theme_input_examples[radio_example]" value="2"' . checked( 2, $options['radio_example'], false ) . '/>';
 	$html .= '&nbsp;';
-	$html .= '<label for="radio_example_two">Option Two</label>';
+	$html .= '<label for="radio_example_two">Medium</label>';
+	$html .= '&nbsp;';
+	$html .= '<input type="radio" id="radio_example_three" name="yass_theme_input_examples[radio_example]" value="2"' . checked( 3, $options['radio_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="radio_example_three">Large</label>';
 
 	echo $html;
 } // end yass_radio_element_callback
-function yass_select_element_callback() {
+
+
+function yass_select_sharing_button_color() {
 	$options = get_option( 'yass_theme_input_examples' );
 
 
-	$html = '<select id="time_options" name="yass_theme_input_examples[time_options]">';
-	$html .= '<option value="default">' . __( 'Select a time option...', 'yass' ) . '</option>';
-	$html .= '<option value="never"' . selected( $options['time_options'], 'never', false ) . '>' . __( 'Never', 'yass' ) . '</option>';
-	$html .= '<option value="sometimes"' . selected( $options['time_options'], 'sometimes', false ) . '>' . __( 'Sometimes', 'yass' ) . '</option>';
-	$html .= '<option value="always"' . selected( $options['time_options'], 'always', false ) . '>' . __( 'Always', 'yass' ) . '</option>';
-	$html .= '</select>';
+	$html = '<input type="radio" id="color_example_one" name="yass_theme_input_examples[radio_example]" value="1"' . checked( 1, $options['radio_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="color_example_one">Default</label>';
+	$html .= '&nbsp;';
+	$html .= '<input type="radio" id="color_example_two" name="yass_theme_input_examples[radio_example]" value="2"' . checked( 2, $options['radio_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="color_example_two">Black</label>';
+	$html .= '&nbsp;';
+	$html .= '<input type="radio" id="color_example_three" name="yass_theme_input_examples[radio_example]" value="2"' . checked( 3, $options['radio_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="color_example_three">White</label>';
+	$html .= '&nbsp;';
+	$html .= '<input type="text" id="color_example_text" name="yass_theme_input_examples[radio_example]" value="2"' . checked( 3, $options['radio_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="color_example_text">Hex Code</label>';
 
 	echo $html;
-} // end yass_radio_element_callback
+} // end yass_select_sharing_button_color
+
+function yass_select_sharing_button_location() {
+
+	$options = get_option( 'yass_theme_input_examples' );
+
+	$html = '<input type="checkbox" id="checkbox_location_below_post_tile" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_location_below_post_tile">below post title </label>';
+
+	$html .= '<input type="checkbox" id="checkbox_location_floating_left" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_location_floating_left">floating left </label>';
+
+
+	$html .= '<input type="checkbox" id="checkbox_locationafter_post_content" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_locationafter_post_content">after post content </label>';
+
+	$html .= '<input type="checkbox" id="checkbox_example_inside_feature_image" name="yass_theme_input_examples[checkbox_example]" value="1"' . checked( 1, $options['checkbox_example'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="checkbox_example_inside_feature_image">inside feature image </label>';
+
+	echo $html;
+
+} // end yass_select_sharing_button_location
+
+
+
+
+
+
+
+
 /* ------------------------------------------------------------------------ *
  * Setting Callbacks
  * ------------------------------------------------------------------------ */

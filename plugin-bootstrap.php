@@ -100,6 +100,32 @@ function yass_add_these_plugin_styles_and_scripts() {
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts' );
 
+
+/**
+ * Enqueue jQuery UI and our scripts and styles in admin
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
+
+	if ( 'toplevel_page_yass_theme_menu' !== $hook ) {
+		return;
+	}
+
+	wp_enqueue_style( 'included-styles-admin', YASS_URL . 'css/included_styles_admin.css' );
+
+	wp_enqueue_script( 'included-js-admin', YASS_URL . 'js/included_js_admin.js', array(
+		'jquery',
+		'jquery-ui-draggable',
+		'jquery-ui-droppable',
+		'jquery-ui-sortable'
+	), false, false );
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts_to_admin' );
+
+
 /**
  * Launch the plugin
  *
