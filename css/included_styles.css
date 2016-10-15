@@ -22,22 +22,15 @@
     text-align: center;
 }
 /* makes the font 33% larger relative to the icon container */
-.fa-lg {
-    font-size: 1.33333333em;
+.fa-2x {
+    font-size: 1.5em;
     line-height: 0.75em;
     vertical-align: -15%;
-}
-.fa-2x {
-    font-size: 2em;
+    min-width: 50px;
 }
 .fa-3x {
-    font-size: 3em;
-}
-.fa-4x {
-    font-size: 4em;
-}
-.fa-5x {
-    font-size: 5em;
+    font-size: 2em;
+    min-width: 60px;
 }
 .fa-fw {
     width: 1.28571429em;
@@ -183,52 +176,48 @@
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 
-.fa-facebook-square:before {
-    content: "\f082";
-}
-.fa-facebook-f:before,
 .fa-facebook:before {
     content: "\f09a";
-}
-.fa-facebook-official:before {
-    content: "\f230";
 }
 .fa-twitter:before {
     content: "\f099";
 }
-.fa-twitter-square:before {
-    content: "\f081";
-}
-.fa-google-plus-square:before {
-    content: "\f0d4";
-}
 .fa-google-plus:before {
     content: "\f0d5";
 }
-.fa-google:before {
-    content: "\f1a0";
-}
-.fa-google-plus-circle:before,
-.fa-google-plus-official:before {
-    content: "\f2b3";
-}
-.fa-pinterest-p:before {
-    content: "\f231";
-}
 .fa-pinterest:before {
     content: "\f0d2";
-}
-.fa-pinterest-square:before {
-    content: "\f0d3";
-}
-.fa-linkedin-square:before {
-    content: "\f08c";
 }
 .fa-linkedin:before {
     content: "\f0e1";
 }
 .fa-whatsapp:before {
     content: "\f232";
+}
+
+.fa-facebook {
+    color: white;
+    background-color: darkblue;
+}
+.fa-twitter {
+    color: white;
+    background-color: lightblue;
+}
+.fa-google-plus {
+    color: white;
+    background-color: indianred;
+}
+.fa-pinterest {
+    color: white;
+    background-color: pink;
+}
+.fa-linkedin {
+    color: white;
+    background-color: blue;
+}
+.fa-whatsapp {
+    color: white;
+    background-color: green;
 }
 
 
@@ -244,15 +233,13 @@
     left: 10px;
     bottom: 50px;
     z-index: 999999999;
-    max-width: 150px;
-
     padding: 10px;
 }
 
 .yass-icon-default {
     padding: 15px;
-    background-color: #aaa;
     border-radius: 100%;
+    margin: 1px 0;
 }
 
 

@@ -137,6 +137,34 @@ function wporg_settings_init() {
 	);
 
 	add_settings_field(
+		'wporg_field_custom_icon_color', // as of WP 4.6 this value is used only internally
+		// use $args' label_for to populate the id inside the callback
+		__( 'Custom Icon Color', 'wporg' ),
+		'wporg_field_custom_icon_color_cb',
+		'wporg',
+		'wporg_section_developers',
+		[
+			'label_for'         => 'wporg_field_custom_icon_color',
+			'class'             => 'wporg_row',
+			'wporg_custom_data' => 'yass-plugin-custom-icon-color',
+		]
+	);
+
+	add_settings_field(
+		'wporg_field_custom_background_color', // as of WP 4.6 this value is used only internally
+		// use $args' label_for to populate the id inside the callback
+		__( 'Custom Background Color', 'wporg' ),
+		'wporg_field_custom_background_color_cb',
+		'wporg',
+		'wporg_section_developers',
+		[
+			'label_for'         => 'wporg_field_custom_background_color',
+			'class'             => 'wporg_row',
+			'wporg_custom_data' => 'yass-plugin-custom-background-color',
+		]
+	);
+
+	add_settings_field(
 		'wporg_field_sharing_location', // as of WP 4.6 this value is used only internally
 		// use $args' label_for to populate the id inside the callback
 		__( 'Sharing Location', 'wporg' ),
@@ -224,6 +252,8 @@ function wporg_field_post_types_cb( $args ) {
 	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'wporg_options' );
 	// output the field
+
+	d($options);
 
 	if ( array_key_exists( 'wporg_field_post_types_posts', $options ) ) {
 		$is_checked_1 = $options['wporg_field_post_types_posts'];
@@ -425,7 +455,7 @@ function wporg_field_icon_size_cb( $args ) {
 /**
  * Button Colors
  *
- * Input type: radio buttons and text
+ * Input type: radio buttons
  *
  * @param $args
  */
@@ -440,16 +470,6 @@ function wporg_field_button_colors_cb( $args ) {
 		$is_checked = $options['wporg_field_button_colors'];
 	} else {
 		$is_checked = '';
-	}
-	if ( array_key_exists( 'wporg_field_button_colors_custom_icon', $options ) ) {
-		$icon_color = $options['wporg_field_button_colors_custom_icon'];
-	} else {
-		$icon_color = '';
-	}
-	if ( array_key_exists( 'wporg_field_button_colors_custom_background', $options ) ) {
-		$background_color = $options['wporg_field_button_colors_custom_background'];
-	} else {
-		$background_color = '';
 	}
 
 	?>
@@ -470,12 +490,61 @@ function wporg_field_button_colors_cb( $args ) {
 	<label
 		for="<?= esc_attr( $args['label_for'] . 'custom' ); ?>"><?= esc_html( 'Custom', 'wporg' ); ?></label>
 
+	<?php
+}
+
+
+/**
+ * Custom Icon Color
+ *
+ * Input type: text
+ *
+ * @param $args
+ */
+
+function wporg_field_custom_icon_color_cb( $args ) {
+	// get the value of the setting we've registered with register_setting()
+	$options = get_option( 'wporg_options' );
+	// output the field
+
+	if ( array_key_exists( 'wporg_field_custom_icon_color', $options ) ) {
+		$icon_color = $options['wporg_field_custom_icon_color'];
+	} else {
+		$icon_color = '';
+	}
+
+	?>
+
 	<input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
 	       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
 	       name="wporg_options[<?= esc_attr( $args['label_for'] ); ?>]"
 	       value="<?php echo $icon_color; ?>"/>
 
 	<label for="<?= esc_attr( $args['label_for'] ); ?>"><?= esc_html( 'Icon Color', 'wporg' ); ?></label>
+
+	<?php
+}
+
+/**
+ * Custom Background Color
+ *
+ * Input type: text
+ *
+ * @param $args
+ */
+
+function wporg_field_custom_background_color_cb( $args ) {
+	// get the value of the setting we've registered with register_setting()
+	$options = get_option( 'wporg_options' );
+	// output the field
+
+	if ( array_key_exists( 'wporg_field_custom_background_color', $options ) ) {
+		$background_color = $options['wporg_field_custom_background_color'];
+	} else {
+		$background_color = '';
+	}
+
+	?>
 
 	<input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
 	       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
