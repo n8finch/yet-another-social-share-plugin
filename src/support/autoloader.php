@@ -23,6 +23,7 @@ function yass_autoload_files( $src_root_dir ) {
 
 	$filenames = array(
 		 'custom/options-page',
+		 'custom/front-end-icons',
 	);
 
 	foreach( $filenames as $filename ) {

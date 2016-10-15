@@ -2,13 +2,13 @@
 /**
  * Sandbox test file
  *
- * @package     n8finch
+ * @package     YetAnotherSocialShare\Custom
  * @since       1.0.0
  * @author      finchps
  * @link        https://n8finch.com
  * @license     GNU General Public License 2.0+
  */
-//namespace n8finch;
+//namespace YetAnotherSocialShare\Custom;
 
 
 /**
