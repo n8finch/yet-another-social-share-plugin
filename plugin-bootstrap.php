@@ -109,7 +109,7 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles
  */
 function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
 
-	if ( 'toplevel_page_wporg' !== $hook ) {
+	if ( 'toplevel_page_yass' !== $hook ) {
 		return;
 	}
 	wp_enqueue_style( 'included-styles-admin', YASS_URL . 'css/included_styles_admin.css' );
