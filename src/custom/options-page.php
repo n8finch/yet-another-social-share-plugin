@@ -4,7 +4,7 @@
  *
  * @package     YetAnotherSocialShare\Custom
  * @since       1.0.0
- * @author      finchps
+ * @author      n8finch
  * @link        https://n8finch.com
  * @license     GNU General Public License 2.0+
  */
@@ -17,10 +17,9 @@
 function yass_default_options() {
 
 	$defaults = array(
-		'yass_field_activate'                             => 'no',
-		'yass_field_post_types_posts'                     => '1',
-		'yass_field_post_types_pages'                     => '2',
-		'yass_field_post_types_custom'                    => '',
+		'yass_field_activate'                             => 'yes',
+		'yass_field_post_types_post'                      => '1',
+		'yass_field_post_types_page'                      => '1',
 		'yass_field_active_networks_fb'                   => '1',
 		'yass_field_active_networks_tw'                   => '1',
 		'yass_field_active_networks_go'                   => '1',
@@ -43,7 +42,7 @@ function yass_default_options() {
 } // end yass_theme_default_input_options
 
 /**
- * custom option and settings
+ * Initialize custom option and settings
  */
 function yass_settings_init() {
 
@@ -57,158 +56,138 @@ function yass_settings_init() {
 
 	// register a new section in the "yass" page
 	add_settings_section(
-		'yass_section_developers',
-		__( 'The Matrix has you.', 'yass' ),
-		'yass_section_developers_cb',
+		'yass_section',
+		__( 'Settings', 'ya-social-share' ),
+		'yass_intro_section_cb',
 		'yass'
 	);
 
-	// register a new field in the "yass_section_developers" section, inside the "yass" page
-
-
+	// register a new field in the "yass_section" section, inside the "yass" page
 	add_settings_field(
 		'yass_field_activate', // as of WP 4.6 this value is used only internally
 		// use $args' label_for to populate the id inside the callback
-		__( 'Activation', 'yass' ),
+		__( 'Activation', 'ya-social-share' ),
 		'yass_field_active_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_activate',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_activate',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-activate',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_post_types', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Post Types', 'yass' ),
+		'yass_field_post_types',
+		__( 'Post Types', 'ya-social-share' ),
 		'yass_field_post_types_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_post_types_',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_post_types_',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-post-types',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_active_networks', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Active Networks', 'yass' ),
+		'yass_field_active_networks',
+		__( 'Active Networks', 'ya-social-share' ),
 		'yass_field_active_networks_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_active_networks',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_active_networks',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-active-networks',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_icon_size', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Icon Size', 'yass' ),
+		'yass_field_icon_size',
+		__( 'Icon Size', 'ya-social-share' ),
 		'yass_field_icon_size_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_icon_size',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_icon_size',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-icon-size',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_button_colors', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Button Colors', 'yass' ),
+		'yass_field_button_colors',
+		__( 'Button Colors', 'ya-social-share' ),
 		'yass_field_button_colors_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_button_colors',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_button_colors',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-button-colors',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_custom_icon_color', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Custom Icon Color', 'yass' ),
+		'yass_field_custom_icon_color',
+		__( 'Custom Icon Color', 'ya-social-share' ),
 		'yass_field_custom_icon_color_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_custom_icon_color',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_custom_icon_color',
+			'class'            => 'yass-row-custom-icon-color',
 			'yass_custom_data' => 'yass-plugin-custom-icon-color',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_custom_background_color', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Custom Background Color', 'yass' ),
+		'yass_field_custom_background_color',
+		__( 'Custom Background Color', 'ya-social-share' ),
 		'yass_field_custom_background_color_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_custom_background_color',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_custom_background_color',
+			'class'            => 'yass-row-custom-background-color',
 			'yass_custom_data' => 'yass-plugin-custom-background-color',
 		]
 	);
 
 	add_settings_field(
-		'yass_field_sharing_location', // as of WP 4.6 this value is used only internally
-		// use $args' label_for to populate the id inside the callback
-		__( 'Sharing Location', 'yass' ),
+		'yass_field_sharing_location',
+		__( 'Sharing Location', 'ya-social-share' ),
 		'yass_field_sharing_location_cb',
 		'yass',
-		'yass_section_developers',
+		'yass_section',
 		[
-			'label_for'         => 'yass_field_sharing_location',
-			'class'             => 'yass_row',
+			'label_for'        => 'yass_field_sharing_location',
+			'class'            => 'yass_row',
 			'yass_custom_data' => 'yass-plugin-sharing-location',
 		]
 	);
-}
+} //end yass_settings_init
 
 /**
  * register our yass_settings_init to the admin_init action hook
  */
 add_action( 'admin_init', 'yass_settings_init' );
 
+/** --------------------------------------------
+ * Custom option and settings callback functions
+ *  -------------------------------------------- */
+
 /**
- * custom option and settings:
- * callback functions
+ * Intro section cb
+ *
  */
 
-// developers section cb
-
-// section callbacks can accept an $args parameter, which is an array.
-// $args have the following keys defined: title, id, callback.
-// the values are defined at the add_settings_section() function.
-function yass_section_developers_cb( $args ) {
+function yass_intro_section_cb( $args ) {
 	?>
-	<p id="<?= esc_attr( $args['id'] ); ?>"><?= esc_html__( 'Follow the white rabbit.', 'yass' ); ?></p>
+	<p id="<?= esc_attr( $args['id'] ); ?>"><?= esc_html__( 'Configure your social sharing experience here.', 'ya-social-share' ); ?></p>
 	<?php
 }
-
-// pill field cb
-
-// field callbacks can accept an $args parameter, which is an array.
-// $args is defined at the add_settings_field() function.
-// wordpress has magic interaction with the following keys: label_for, class.
-// the "label_for" key value is used for the "for" attribute of the <label>.
-// the "class" key value is used for the "class" attribute of the <tr> containing the field.
-// you can add custom key value pairs to be used inside your callbacks.
-
 
 /**
  * Plugin activation
@@ -219,27 +198,25 @@ function yass_section_developers_cb( $args ) {
  */
 
 function yass_field_active_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
+	// get the yass_options from the db
 	$options = get_option( 'yass_options' );
-	// output the field
+
 	?>
 	<label for="<?= esc_attr( $args['label_for'] ); ?>">Would you like to activate the Social Sharing plugin?</label>
 	<select id="<?= esc_attr( $args['label_for'] ); ?>"
 	        data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 	        name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]">
 		<option
-			value="deactivate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'deactivate', false ) ) : ( '' ); ?>>
-			<?= esc_html( 'no', 'yass' ); ?>
+			value="deactivate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'deactivate', false ) ) : ( '' ); ?>><?= esc_html( 'no', 'yass' ); ?>
 		</option>
 		<option
-			value="activate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'activate', false ) ) : ( '' ); ?>>
-			<?= esc_html( 'yes', 'yass' ); ?>
+			value="activate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'activate', false ) ) : ( '' ); ?>><?= esc_html( 'yes', 'yass' ); ?>
 		</option>
 
 	</select>
 
 	<?php
-}
+} //end yass_field_active_cb
 
 /**
  * Post Types Checkboxes
@@ -249,13 +226,11 @@ function yass_field_active_cb( $args ) {
  * @param $args
  */
 function yass_field_post_types_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
-	$public_post_types = get_post_types(array("public"=>true));
+	$public_post_types = get_post_types( array( "public" => true ) );
 
-	foreach($public_post_types as $post_type) {
+	foreach ( $public_post_types as $post_type ) {
 
 		if ( array_key_exists( 'yass_field_post_types_' . $post_type, $options ) ) {
 			$is_checked = $options[ 'yass_field_post_types_' . $post_type ];
@@ -269,12 +244,12 @@ function yass_field_post_types_cb( $args ) {
 		       value="1" <?php checked( 1, $is_checked, true ); ?>/>
 
 		<label
-			for="<?= esc_attr( $args['label_for'] . $post_type ); ?>"><?= esc_html( ucfirst($post_type), 'yass' ); ?></label>
+			for="<?= esc_attr( $args['label_for'] . $post_type ); ?>"><?= esc_html( ucfirst( $post_type ), 'yass' ); ?></label>
 
 		<?php
 	}
 
-}
+} // end yass_field_post_types_cb
 
 /**
  * Active Networks
@@ -284,9 +259,7 @@ function yass_field_post_types_cb( $args ) {
  * @param $args
  */
 function yass_field_active_networks_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
 	if ( array_key_exists( 'yass_field_active_networks_fb', $options ) ) {
 		$is_checked_fb = $options['yass_field_active_networks_fb'];
@@ -373,7 +346,7 @@ function yass_field_active_networks_cb( $args ) {
 	</ul>
 
 	<?php
-}
+} // end yass_field_active_networks_cb
 
 /**
  * Icon Size
@@ -384,17 +357,13 @@ function yass_field_active_networks_cb( $args ) {
  */
 
 function yass_field_icon_size_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
-
 
 	if ( array_key_exists( 'yass_field_icon_size', $options ) ) {
 		$is_checked = $options['yass_field_icon_size'];
 	} else {
 		$is_checked = '';
 	}
-
 	?>
 
 	<input type="radio" id="<?= esc_attr( $args['label_for'] . 'small' ); ?>"
@@ -422,7 +391,7 @@ function yass_field_icon_size_cb( $args ) {
 		for="<?= esc_attr( $args['label_for'] . 'large' ); ?>"><?= esc_html( 'Large', 'yass' ); ?></label>
 
 	<?php
-}
+} // end yass_field_icon_size_cb
 
 
 /**
@@ -434,9 +403,7 @@ function yass_field_icon_size_cb( $args ) {
  */
 
 function yass_field_button_colors_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
 
 	if ( array_key_exists( 'yass_field_button_colors', $options ) ) {
@@ -444,7 +411,6 @@ function yass_field_button_colors_cb( $args ) {
 	} else {
 		$is_checked = '';
 	}
-
 	?>
 
 	<input type="radio" id="<?= esc_attr( $args['label_for'] . 'default' ); ?>"
@@ -464,7 +430,7 @@ function yass_field_button_colors_cb( $args ) {
 		for="<?= esc_attr( $args['label_for'] . 'custom' ); ?>"><?= esc_html( 'Custom', 'yass' ); ?></label>
 
 	<?php
-}
+} //end yass_field_button_colors_cb
 
 
 /**
@@ -476,16 +442,13 @@ function yass_field_button_colors_cb( $args ) {
  */
 
 function yass_field_custom_icon_color_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
 	if ( array_key_exists( 'yass_field_custom_icon_color', $options ) ) {
 		$icon_color = $options['yass_field_custom_icon_color'];
 	} else {
 		$icon_color = '';
 	}
-
 	?>
 
 	<input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
@@ -496,7 +459,7 @@ function yass_field_custom_icon_color_cb( $args ) {
 	<label for="<?= esc_attr( $args['label_for'] ); ?>"><?= esc_html( 'Icon Color', 'yass' ); ?></label>
 
 	<?php
-}
+} //end yass_field_custom_icon_color_cb
 
 /**
  * Custom Background Color
@@ -507,16 +470,13 @@ function yass_field_custom_icon_color_cb( $args ) {
  */
 
 function yass_field_custom_background_color_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
 	if ( array_key_exists( 'yass_field_custom_background_color', $options ) ) {
 		$background_color = $options['yass_field_custom_background_color'];
 	} else {
 		$background_color = '';
 	}
-
 	?>
 
 	<input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
@@ -527,7 +487,7 @@ function yass_field_custom_background_color_cb( $args ) {
 	<label for="<?= esc_attr( $args['label_for'] ); ?>"><?= esc_html( 'Background Color', 'yass' ); ?></label>
 
 	<?php
-}
+} // end yass_field_custom_background_color_cb
 
 
 /**
@@ -538,9 +498,7 @@ function yass_field_custom_background_color_cb( $args ) {
  * @param $args
  */
 function yass_field_sharing_location_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
 	$options = get_option( 'yass_options' );
-	// output the field
 
 	if ( array_key_exists( 'yass_field_sharing_location_below_post_title', $options ) ) {
 		$below_post_title = $options['yass_field_sharing_location_below_post_title'];
@@ -600,180 +558,30 @@ function yass_field_sharing_location_cb( $args ) {
 		for="<?= esc_attr( $args['label_for'] . '_inside_feature_image' ); ?>"><?= esc_html( 'Inside Feature Image', 'yass' ); ?></label>
 
 	<?php
-}
-
-
-/**
- * Radio Buttons
- *
- * @param $args
- */
-
-function yass_field_radio_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
-	$options = get_option( 'yass_options' );
-	// output the field
-
-
-	if ( array_key_exists( 'yass_field_radio', $options ) ) {
-		$is_checked = $options['yass_field_radio'];
-	} else {
-		$is_checked = '';
-	}
-
-
-	?>
-
-	<input type="radio" id="<?= esc_attr( $args['label_for'] . 'option1' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]"
-	       value="1" <?php checked( 1, $is_checked, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . 'option1' ); ?>"><?= esc_html( 'Option 1', 'yass' ); ?></label>
-
-	<input type="radio" id="<?= esc_attr( $args['label_for'] . 'option2' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]"
-	       value="2" <?php checked( 2, $is_checked, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . 'option2' ); ?>"><?= esc_html( 'Option 2', 'yass' ); ?></label>
-
-	<?php
-}
+} //end yass_field_sharing_location_cb
 
 /**
- * Input type: checkboxes
- *
- * @param $args
- */
-function yass_field_checkbox_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
-	$options = get_option( 'yass_options' );
-	// output the field
-
-
-	if ( array_key_exists( 'yass_field_checkbox_option1', $options ) ) {
-		$is_checked_1 = $options['yass_field_checkbox_option1'];
-	} else {
-		$is_checked_1 = '';
-	}
-
-	if ( array_key_exists( 'yass_field_checkbox_option2', $options ) ) {
-		$is_checked_2 = $options['yass_field_checkbox_option2'];
-	} else {
-		$is_checked_2 = '';
-	}
-
-
-	?>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_option1' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] . '_option1' ); ?>]"
-	       value="1" <?php checked( 1, $is_checked_1, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_option1' ); ?>"><?= esc_html( 'Option 1', 'yass' ); ?></label>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_option2' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] . '_option2' ); ?>]"
-	       value="2" <?php checked( 2, $is_checked_2, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_option2' ); ?>"><?= esc_html( 'Option 2', 'yass' ); ?></label>
-
-	<?php
-}
-
-/**
- * Plugin activation
- *
- * Select type
- *
- * @param $args
- */
-
-function yass_field_select_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
-	$options = get_option( 'yass_options' );
-	// output the field
-	?>
-	<label id="<?= esc_attr( $args['label_for'] ); ?>">Would you like to activate the Social Sharing plugin?</label>
-	<select id="<?= esc_attr( $args['label_for'] ); ?>"
-	        data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	        name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]">
-		<option
-			value="deactivate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'deactivate', false ) ) : ( '' ); ?>>
-			<?= esc_html( 'no', 'yass' ); ?>
-		</option>
-		<option
-			value="activate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'activate', false ) ) : ( '' ); ?>>
-			<?= esc_html( 'yes', 'yass' ); ?>
-		</option>
-
-	</select>
-
-	<?php
-}
-
-
-/**
- * Input
- *
- * @param $args
- */
-
-function yass_field_text_cb( $args ) {
-	// get the value of the setting we've registered with register_setting()
-	$options = get_option( 'yass_options' );
-	// output the field
-
-	if ( array_key_exists( 'yass_field_text', $options ) ) {
-		$is_checked = $options['yass_field_text'];
-	} else {
-		$is_checked = '';
-	}
-
-	?>
-
-	<input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]"
-	       value="<?php echo $is_checked; ?>"/>
-
-	<label for="<?= esc_attr( $args['label_for'] ); ?>"><?= esc_html( 'Label', 'yass' ); ?></label>
-
-
-	<?php
-}
-
-
-/**
- * top level menu
+ * Create the top level menu
  */
 function yass_options_page() {
 	// add top level menu page
 	add_menu_page(
-		'yass',
-		'yass Options',
+		'YA Social Sharing Plugin',
+		'YA Social Sharing',
 		'manage_options',
 		'yass',
 		'yass_options_page_html',
 		'dashicons-share'
 	);
-}
+} //end yass_options_page
 
 /**
- * register our yass_options_page to the admin_menu action hook
+ * Register yass_options_page to the admin_menu action hook
  */
 add_action( 'admin_menu', 'yass_options_page' );
 
 /**
- * top level menu:
- * callback functions
+ * Top level menu callback function
  */
 function yass_options_page_html() {
 	// check user capabilities
@@ -781,13 +589,11 @@ function yass_options_page_html() {
 		return;
 	}
 
-	// add error/update messages
-
 	// check if the user have submitted the settings
-	// wordpress will add the "settings-updated" $_GET parameter to the url
+	// WordPress will add the "settings-updated" $_GET parameter to the url
 	if ( isset( $_GET['settings-updated'] ) ) {
 		// add settings saved message with the class of "updated"
-		add_settings_error( 'yass_messages', 'yass_message', __( 'Settings Saved', 'yass' ), 'updated' );
+		add_settings_error( 'yass_messages', 'yass_message', __( 'Settings Saved', 'ya-social-share' ), 'updated' );
 	}
 
 	// show error/update messages

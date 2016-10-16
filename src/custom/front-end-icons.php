@@ -12,30 +12,30 @@
 
 //namespace YetAnotherSocialShare\Custom;
 
-$yass_options = get_option( 'wporg_options' );
+$yass_options = get_option( 'yass_options' );
 
 //Bail out if plugin is deactivated
-if ($yass_options['wporg_field_activate'] === 'activate') {
+if ($yass_options['yass_field_activate'] === 'activate') {
 	add_action('wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left');
 }
 
 function add_yass_social_icons_floating_left() {
 
-	$yass_options = get_option( 'wporg_options' );
+	$yass_options = get_option( 'yass_options' );
 
 	//Color option
-	if ( $yass_options['wporg_field_button_colors'] === 'default') {
+	if ( $yass_options['yass_field_button_colors'] === 'default') {
 		$yass_color_option = '';
 	} else {
-		$yass_color_option = 'style="color: '.$yass_options['wporg_field_custom_icon_color'].'; background-color: '.$yass_options['wporg_field_custom_background_color'].';"';
+		$yass_color_option = 'style="color: '.$yass_options['yass_field_custom_icon_color'].'; background-color: '.$yass_options['yass_field_custom_background_color'].';"';
 	}
 
 	//Size
-	if ( $yass_options['wporg_field_icon_size'] === 'small') {
+	if ( $yass_options['yass_field_icon_size'] === 'small') {
 		$yass_size_option = '';
-	} elseif ( $yass_options['wporg_field_icon_size'] === 'medium') {
+	} elseif ( $yass_options['yass_field_icon_size'] === 'medium') {
 		$yass_size_option = 'fa-2x';
-	} elseif ( $yass_options['wporg_field_icon_size'] === 'large') {
+	} elseif ( $yass_options['yass_field_icon_size'] === 'large') {
 		$yass_size_option = 'fa-3x';
 	}
 	?>
