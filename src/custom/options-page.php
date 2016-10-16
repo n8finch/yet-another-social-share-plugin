@@ -88,7 +88,7 @@ function wporg_settings_init() {
 		'wporg',
 		'wporg_section_developers',
 		[
-			'label_for'         => 'wporg_field_post_types',
+			'label_for'         => 'wporg_field_post_types_',
 			'class'             => 'wporg_row',
 			'wporg_custom_data' => 'yass-plugin-post-types',
 		]
@@ -253,54 +253,27 @@ function wporg_field_post_types_cb( $args ) {
 	$options = get_option( 'wporg_options' );
 	// output the field
 
-	d($options);
+	$public_post_types = get_post_types(array("public"=>true));
 
-	if ( array_key_exists( 'wporg_field_post_types_posts', $options ) ) {
-		$is_checked_1 = $options['wporg_field_post_types_posts'];
-	} else {
-		$is_checked_1 = '';
+	foreach($public_post_types as $post_type) {
+
+		if ( array_key_exists( 'wporg_field_post_types_' . $post_type, $options ) ) {
+			$is_checked = $options[ 'wporg_field_post_types_' . $post_type ];
+		} else {
+			$is_checked = '';
+		}
+		?>
+		<input type="checkbox" id="<?= esc_attr( $args['label_for'] . $post_type ); ?>"
+		       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
+		       name="wporg_options[<?= esc_attr( $args['label_for'] . $post_type ); ?>]"
+		       value="1" <?php checked( 1, $is_checked, true ); ?>/>
+
+		<label
+			for="<?= esc_attr( $args['label_for'] . $post_type ); ?>"><?= esc_html( ucfirst($post_type), 'wporg' ); ?></label>
+
+		<?php
 	}
 
-	if ( array_key_exists( 'wporg_field_post_types_pages', $options ) ) {
-		$is_checked_2 = $options['wporg_field_post_types_pages'];
-	} else {
-		$is_checked_2 = '';
-	}
-
-	if ( array_key_exists( 'wporg_field_post_types_custom', $options ) ) {
-		$is_checked_3 = $options['wporg_field_post_types_custom'];
-	} else {
-		$is_checked_3 = '';
-	}
-
-
-	?>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_posts' ); ?>"
-	       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
-	       name="wporg_options[<?= esc_attr( $args['label_for'] . '_posts' ); ?>]"
-	       value="1" <?php checked( 1, $is_checked_1, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_posts' ); ?>"><?= esc_html( 'Posts', 'wporg' ); ?></label>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_pages' ); ?>"
-	       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
-	       name="wporg_options[<?= esc_attr( $args['label_for'] . '_pages' ); ?>]"
-	       value="2" <?php checked( 2, $is_checked_2, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_pages' ); ?>"><?= esc_html( 'Pages', 'wporg' ); ?></label>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_custom' ); ?>"
-	       data-custom="<?= esc_attr( $args['wporg_custom_data'] ); ?>"
-	       name="wporg_options[<?= esc_attr( $args['label_for'] . '_custom' ); ?>]"
-	       value="3" <?php checked( 3, $is_checked_3, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_custom' ); ?>"><?= esc_html( 'Custom', 'wporg' ); ?></label>
-
-	<?php
 }
 
 /**
