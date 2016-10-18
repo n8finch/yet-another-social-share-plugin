@@ -10,21 +10,6 @@
     $(function () {
       var sortableTable = $("#sortable");
 
-
-      // sortableTable.sortable({
-      //   items: '.ui-state-default',
-      //   placeholder: "ui-state-highlight",
-      //   axis: 'y',
-      //   update: function() {
-      //     var order = $(this).sortable('serialize') + '&action=dad_update_order';
-      //     alert(order);
-      //
-      //     // $.post(ajaxurl, order, function(response) {
-      //     //   // success, maybe alert the user
-      //     // });
-      //   }
-      // });
-
       $('.dad-list').sortable({
         items: '.list_item',
         opacity: 0.6,

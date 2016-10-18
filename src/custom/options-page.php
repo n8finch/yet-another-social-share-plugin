@@ -259,46 +259,8 @@ function yass_field_post_types_cb( $args ) {
  * @param $args
  */
 function yass_field_active_networks_cb( $args ) {
-	$options = get_option( 'yass_options' );
-	$yass_active_array = array();
-	if ( array_key_exists( 'yass_field_active_networks_fb', $options ) ) {
-		$yass_active_array['fb'] = $options['yass_field_active_networks_fb'];
-	} else {
-		$yass_active_array['fb'] = '';
-	}
 
-	if ( array_key_exists( 'yass_field_active_networks_tw', $options ) ) {
-		$yass_active_array['tw'] = $options['yass_field_active_networks_tw'];
-	} else {
-		$yass_active_array['tw'] = '';
-	}
-
-	if ( array_key_exists( 'yass_field_active_networks_go', $options ) ) {
-		$yass_active_array['go'] = $options['yass_field_active_networks_go'];
-	} else {
-		$yass_active_array['go'] = '';
-	}
-
-	if ( array_key_exists( 'yass_field_active_networks_pi', $options ) ) {
-		$yass_active_array['pi'] = $options['yass_field_active_networks_pi'];
-	} else {
-		$yass_active_array['pi'] = '';
-	}
-
-	if ( array_key_exists( 'yass_field_active_networks_li', $options ) ) {
-		$yass_active_array['li'] = $options['yass_field_active_networks_li'];
-	} else {
-		$yass_active_array['li'] = '';
-	}
-
-	if ( array_key_exists( 'yass_field_active_networks_wa', $options ) ) {
-		$yass_active_array['wa'] = $options['yass_field_active_networks_wa'];
-	} else {
-		$yass_active_array['wa'] = '';
-	}
-
-	d($yass_active_array);
-
+	global $dad_list;
 
 	$dad_list = get_option( 'dad_list' );
 	if ( ! isset( $dad_list ) || ! is_array( $dad_list ) ) {
@@ -313,42 +275,49 @@ function yass_field_active_networks_cb( $args ) {
 		add_option( 'dad_list', $list );
 	}
 
+	$options = get_option( 'yass_options' );
 
-	global $dad_list;
+	$yass_active_array = array();
+
+	foreach($dad_list as $key => $value) {
+		if ( array_key_exists( 'yass_field_active_networks_' . $key, $options ) ) {
+			$yass_active_array[$key] = $options['yass_field_active_networks_' . $key];
+		} else {
+			$yass_active_array[$key] = '';
+		}
+	}
 
 
 	ob_start();
-
 	?>
 	<div class="wrap">
 		<table class="wp-list-table widefat fixed posts dad-list">
 			<thead>
 			<tr>
-				<th><?php _e( 'Network', 'ya-social-share' ); ?></th>
-				<th><?php _e( 'Order', 'ya-social-share' ); ?></th>
-				<th><?php _e( 'Active', 'ya-social-share' ); ?></th>
+				<th><?php _e('Network', 'ya-social-share'); ?></th>
+				<th><?php _e('Order', 'ya-social-share'); ?></th>
+				<th><?php _e('Active', 'ya-social-share'); ?></th>
 			</tr>
 			</thead>
 			<tbody>
 			<?php
 			$count = 0;
-			foreach ( $dad_list as $key => $item ) :
+			foreach($dad_list as $key => $item) :
 
-					echo '<tr id="list_items_' . $key . '" class="list_item">';
-					echo '<td>' . $item . '</td>';
-					echo '<td>' . $count . '</td>';
-					echo '<td>';
-
-					?>
-					<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_'.$key ); ?>"
-					       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-					       name="yass_options[<?= esc_attr( $args['label_for'] . '_' .$key ); ?>]"
-					       value="1" <?php checked( 1, $yass_active_array[$key], true ); ?>/>
-					<label for="<?= esc_attr( $args['label_for'] . '_' .$key ); ?>"></label>
-					<?php
-					echo '</td>';
-					echo '</tr>';
-					$count ++;
+				echo '<tr id="list_items_' . $key . '" class="list_item">';
+				echo '<td>' . $item . '</td>';
+				echo '<td>' . $count . '</td>';
+				echo '<td>';
+				?>
+				<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"
+				       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
+				       name="yass_options[<?= esc_attr( $args['label_for'] . '_' . $key ); ?>]"
+				       value="1" <?php checked( 1, $yass_active_array[$key], true ); ?>/>
+				<label for="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"></label>
+				<?php
+				echo'</td>';
+				echo '</tr>';
+				$count++;
 			endforeach;
 			?>
 			</tbody>
@@ -358,55 +327,7 @@ function yass_field_active_networks_cb( $args ) {
 	</div>
 	<?php
 	echo ob_get_clean();
-	?>
 
-
-	<!--	<ul id="sortable">-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_fb' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_fb' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_fb, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_fb' ); ?><!--">Facebook</label>-->
-	<!--		</li>-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_tw' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_tw' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_tw, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_tw' ); ?><!--">Twitter</label>-->
-	<!--		</li>-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_go' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_go' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_go, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_go' ); ?><!--">Google+</label>-->
-	<!--		</li>-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_pi' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_pi' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_pi, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_pi' ); ?><!--">Pinterest</label>-->
-	<!--		</li>-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_li' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_li' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_li, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_li' ); ?><!--">LinkedIn</label>-->
-	<!--		</li>-->
-	<!--		<li class="ui-state-default .list_item">-->
-	<!--			<input type="checkbox" id="--><? //= esc_attr( $args['label_for'] . '_wa' ); ?><!--"-->
-	<!--			       data-custom="--><? //= esc_attr( $args['yass_custom_data'] ); ?><!--"-->
-	<!--			       name="yass_options[--><? //= esc_attr( $args['label_for'] . '_wa' ); ?><!--]"-->
-	<!--			       value="1" --><?php //checked( 1, $is_checked_wa, true ); ?><!--/>-->
-	<!--			<label for="--><? //= esc_attr( $args['label_for'] . '_wa' ); ?><!--">What's App</label>-->
-	<!--		</li>-->
-	<!--	</ul>-->
-
-	<?php
 } // end yass_field_active_networks_cb
 
 /**
