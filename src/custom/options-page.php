@@ -8,7 +8,7 @@
  * @link        https://n8finch.com
  * @license     GNU General Public License 2.0+
  */
-//namespace YetAnotherSocialShare\Custom;
+namespace YetAnotherSocialShare\Custom;
 
 
 /**
@@ -42,12 +42,31 @@ function yass_default_options() {
 } // end yass_theme_default_input_options
 
 /**
+ * Provides default values for the Drag and Drop list.
+ */
+function default_dad_list() {
+	$dad_defautls = array(
+		'fb' => 'Facebook',
+		'tw' => 'Twitter',
+		'go' => 'Google+',
+		'pi' => 'Pinterest',
+		'li' => 'LinkedIn',
+		'wa' => 'What\'sApp',
+	);
+	return apply_filters( 'yass_dad_default_options', $dad_defautls);
+}
+
+/**
  * Initialize custom option and settings
  */
 function yass_settings_init() {
 
 	if ( false == get_option( 'yass_options' ) ) {
 		add_option( 'yass_options', apply_filters( 'yass_default_options', yass_default_options() ) );
+	} // end if
+
+	if ( false == get_option( 'dad_list' ) ) {
+		add_option( 'dad_list', apply_filters( 'yass_dad_default_options', default_dad_list() ) );
 	} // end if
 
 
@@ -58,7 +77,7 @@ function yass_settings_init() {
 	add_settings_section(
 		'yass_section',
 		__( 'Settings', 'ya-social-share' ),
-		'yass_intro_section_cb',
+		__NAMESPACE__ . '\yass_intro_section_cb',
 		'yass'
 	);
 
@@ -67,7 +86,7 @@ function yass_settings_init() {
 		'yass_field_activate', // as of WP 4.6 this value is used only internally
 		// use $args' label_for to populate the id inside the callback
 		__( 'Activation', 'ya-social-share' ),
-		'yass_field_active_cb',
+		__NAMESPACE__ . '\yass_field_active_cb',
 		'yass',
 		'yass_section',
 		[
@@ -80,7 +99,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_post_types',
 		__( 'Post Types', 'ya-social-share' ),
-		'yass_field_post_types_cb',
+		__NAMESPACE__ . '\yass_field_post_types_cb',
 		'yass',
 		'yass_section',
 		[
@@ -93,7 +112,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_active_networks',
 		__( 'Active Networks', 'ya-social-share' ),
-		'yass_field_active_networks_cb',
+		__NAMESPACE__ . '\yass_field_active_networks_cb',
 		'yass',
 		'yass_section',
 		[
@@ -106,7 +125,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_icon_size',
 		__( 'Icon Size', 'ya-social-share' ),
-		'yass_field_icon_size_cb',
+		__NAMESPACE__ . '\yass_field_icon_size_cb',
 		'yass',
 		'yass_section',
 		[
@@ -119,7 +138,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_button_colors',
 		__( 'Button Colors', 'ya-social-share' ),
-		'yass_field_button_colors_cb',
+		__NAMESPACE__ . '\yass_field_button_colors_cb',
 		'yass',
 		'yass_section',
 		[
@@ -132,7 +151,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_custom_icon_color',
 		__( 'Custom Icon Color', 'ya-social-share' ),
-		'yass_field_custom_icon_color_cb',
+		__NAMESPACE__ . '\yass_field_custom_icon_color_cb',
 		'yass',
 		'yass_section',
 		[
@@ -145,7 +164,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_custom_background_color',
 		__( 'Custom Background Color', 'ya-social-share' ),
-		'yass_field_custom_background_color_cb',
+		__NAMESPACE__ . '\yass_field_custom_background_color_cb',
 		'yass',
 		'yass_section',
 		[
@@ -158,7 +177,7 @@ function yass_settings_init() {
 	add_settings_field(
 		'yass_field_sharing_location',
 		__( 'Sharing Location', 'ya-social-share' ),
-		'yass_field_sharing_location_cb',
+		__NAMESPACE__ . '\yass_field_sharing_location_cb',
 		'yass',
 		'yass_section',
 		[
@@ -172,7 +191,7 @@ function yass_settings_init() {
 /**
  * register our yass_settings_init to the admin_init action hook
  */
-add_action( 'admin_init', 'yass_settings_init' );
+add_action( 'admin_init', __NAMESPACE__ . '\yass_settings_init' );
 
 /** --------------------------------------------
  * Custom option and settings callback functions
@@ -263,17 +282,6 @@ function yass_field_active_networks_cb( $args ) {
 	global $dad_list;
 
 	$dad_list = get_option( 'dad_list' );
-	if ( ! isset( $dad_list ) || ! is_array( $dad_list ) ) {
-		$list = array(
-			'fb' => 'Facebook',
-			'tw' => 'Twitter',
-			'go' => 'Google+',
-			'pi' => 'Pinterest',
-			'li' => 'LinkedIn',
-			'wa' => 'What\'sApp',
-		);
-		add_option( 'dad_list', $list );
-	}
 
 	$options = get_option( 'yass_options' );
 
@@ -552,7 +560,7 @@ function yass_options_page() {
 		'YA Social Sharing',
 		'manage_options',
 		'yass',
-		'yass_options_page_html',
+		__NAMESPACE__ . '\yass_options_page_html_cb',
 		'dashicons-share'
 	);
 } //end yass_options_page
@@ -560,12 +568,12 @@ function yass_options_page() {
 /**
  * Register yass_options_page to the admin_menu action hook
  */
-add_action( 'admin_menu', 'yass_options_page' );
+add_action( 'admin_menu', __NAMESPACE__ . '\yass_options_page' );
 
 /**
  * Top level menu callback function
  */
-function yass_options_page_html() {
+function yass_options_page_html_cb() {
 	// check user capabilities
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;

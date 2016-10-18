@@ -130,7 +130,7 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_sty
 
 function dad_save_order() {
 
-	global $dad_list;
+	$dad_list = get_option('dad_list');
 
 	$list = $dad_list;
 	$new_order = $_POST['list_items'];
@@ -148,7 +148,7 @@ function dad_save_order() {
 
 	die();
 }
-add_action('wp_ajax_dad_update_order', 'dad_save_order');
+add_action('wp_ajax_dad_update_order', __NAMESPACE__ . '\dad_save_order');
 
 /**
  * Launch the plugin

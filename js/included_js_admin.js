@@ -3,10 +3,6 @@
 
   $(function () {
 
-    console.log('admin js loaded');
-
-    var yassAjax = window.yassAjax;
-
     $(function () {
       var sortableTable = $("#sortable");
 
