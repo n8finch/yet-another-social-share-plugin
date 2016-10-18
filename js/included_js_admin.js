@@ -32,7 +32,6 @@
         axis: 'y',
         update: function() {
           var order = $(this).sortable('serialize') + '&action=dad_update_order';
-          alert(order);
           $.post(ajaxurl, order, function(response) {
             // success, maybe alert the user
           });
