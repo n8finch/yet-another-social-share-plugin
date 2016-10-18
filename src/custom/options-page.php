@@ -296,47 +296,45 @@ function yass_field_active_networks_cb( $args ) {
 	} else {
 		$is_checked_wa = '';
 	}
-
 	?>
 
-	<p>Drag the networks in the order you would like them to appear. Check the networks you want activated.</p>
 	<ul id="sortable">
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_fb' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_fb' ); ?>]"
 			       value="1" <?php checked( 1, $is_checked_fb, true ); ?>/>
-			<label for="<?= esc_attr( $args['label_for'] . '_fb' ); ?>">Facbook</label>
+			<label for="<?= esc_attr( $args['label_for'] . '_fb' ); ?>">Facebook</label>
 		</li>
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_tw' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_tw' ); ?>]"
 			       value="1" <?php checked( 1, $is_checked_tw, true ); ?>/>
 			<label for="<?= esc_attr( $args['label_for'] . '_tw' ); ?>">Twitter</label>
 		</li>
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_go' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_go' ); ?>]"
 			       value="1" <?php checked( 1, $is_checked_go, true ); ?>/>
 			<label for="<?= esc_attr( $args['label_for'] . '_go' ); ?>">Google+</label>
 		</li>
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_pi' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_pi' ); ?>]"
 			       value="1" <?php checked( 1, $is_checked_pi, true ); ?>/>
 			<label for="<?= esc_attr( $args['label_for'] . '_pi' ); ?>">Pinterest</label>
 		</li>
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_li' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_li' ); ?>]"
 			       value="1" <?php checked( 1, $is_checked_li, true ); ?>/>
 			<label for="<?= esc_attr( $args['label_for'] . '_li' ); ?>">LinkedIn</label>
 		</li>
-		<li class="ui-state-default">
+		<li class="ui-state-default .list_item">
 			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_wa' ); ?>"
 			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 			       name="yass_options[<?= esc_attr( $args['label_for'] . '_wa' ); ?>]"

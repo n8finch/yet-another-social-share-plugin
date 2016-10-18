@@ -5,15 +5,40 @@
 
     console.log('admin js loaded');
 
+    var yassAjax = window.yassAjax;
 
     $(function () {
       var sortableTable = $("#sortable");
 
+
+      // sortableTable.sortable({
+      //   items: '.ui-state-default',
+      //   placeholder: "ui-state-highlight",
+      //   axis: 'y',
+      //   update: function() {
+      //     var order = $(this).sortable('serialize') + '&action=dad_update_order';
+      //     alert(order);
+      //
+      //     // $.post(ajaxurl, order, function(response) {
+      //     //   // success, maybe alert the user
+      //     // });
+      //   }
+      // });
+
       sortableTable.sortable({
-        placeholder: "ui-state-highlight",
-        cancel: ".ui-state-disabled"
+        items: '.yass_list_item',
+        opacity: 0.6,
+        cursor: 'move',
+        axis: 'y',
+        update: function () {
+          var order = $(this).sortable('serialize') + '&action=yass_update_order';
+          console.log(order);
+          $.post(ajaxurl, order, function(response) {
+            console.log(response);
+            // console.log('settings saved');
+          });
+        }
       });
-      sortableTable.disableSelection();
     });
 
     //Cache Icon Color Rows
@@ -44,8 +69,6 @@
         $(yass_background_color_row).hide();
       }
     });
-
-
 
   });
 

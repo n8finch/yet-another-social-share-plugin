@@ -5,16 +5,17 @@
     width: 60%;
 }
 
+#sortable .yass_list_item {
+    cursor: move;
+}
+
 #sortable li {
     margin: 0 5px 5px 5px;
     padding: 5px;
     font-size: 1.2em;
     height: 1.5em;
-}
-
-#sortable li {
-    height: 1.5em;
     line-height: 1.2em;
+    cursor: move;
 }
 
 .ui-state-highlight {

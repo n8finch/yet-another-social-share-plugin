@@ -96,6 +96,7 @@ function yass_add_these_plugin_styles_and_scripts() {
 		'jquery'
 	), false, false );
 
+
 }
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts' );
@@ -119,9 +120,39 @@ function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
 		'jquery-ui-droppable',
 		'jquery-ui-sortable'
 	), false, false );
+
+	wp_localize_script( 'included-js-admin', 'yassAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+
 }
+
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts_to_admin' );
 
+
+
+function yass_save_order() {
+
+	$list = get_option('yass_network_list_order');
+	print_r($list);
+	$new_order = $_POST['list_items'];
+	$new_list = array();
+	print_r($new_order);
+	print_r($new_list);
+	//Update the order
+	foreach($new_order as $key => $value) {
+
+		if(isset($list[$value])) {
+
+			$new_list[$value] = $list[$value];
+		}
+
+	}
+
+	//Save the new order
+	update_option('yass_network_list_order', $new_list);
+
+}
+
+//add_action('wp_ajax_yass_update_order', __NAMESPACE__ . '\yass_save_order');
 
 /**
  * Launch the plugin
