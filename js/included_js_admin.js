@@ -25,19 +25,19 @@
       //   }
       // });
 
-      sortableTable.sortable({
-        items: '.yass_list_item',
+      $('.dad-list').sortable({
+        items: '.list_item',
         opacity: 0.6,
         cursor: 'move',
         axis: 'y',
-        update: function () {
-          var order = $(this).sortable('serialize') + '&action=yass_update_order';
-          console.log(order);
+        update: function() {
+          var order = $(this).sortable('serialize') + '&action=dad_update_order';
+          alert(order);
           $.post(ajaxurl, order, function(response) {
-            console.log(response);
-            // console.log('settings saved');
+            // success, maybe alert the user
           });
         }
+
       });
     });
 

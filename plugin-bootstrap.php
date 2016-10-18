@@ -129,30 +129,27 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_sty
 
 
 
-function yass_save_order() {
+function dad_save_order() {
 
-	$list = get_option('yass_network_list_order');
-	print_r($list);
+	global $dad_list;
+
+	$list = $dad_list;
 	$new_order = $_POST['list_items'];
 	$new_list = array();
-	print_r($new_order);
-	print_r($new_list);
-	//Update the order
-	foreach($new_order as $key => $value) {
 
-		if(isset($list[$value])) {
-
-			$new_list[$value] = $list[$value];
+	// update order
+	foreach($new_order as $v) {
+		if(isset($list[$v])) {
+			$new_list[$v] = $list[$v];
 		}
-
 	}
 
-	//Save the new order
-	update_option('yass_network_list_order', $new_list);
+	// save the new order
+	update_option('dad_list', $new_list);
 
+	die();
 }
-
-//add_action('wp_ajax_yass_update_order', __NAMESPACE__ . '\yass_save_order');
+add_action('wp_ajax_dad_update_order', 'dad_save_order');
 
 /**
  * Launch the plugin
