@@ -299,12 +299,12 @@ function yass_field_active_networks_cb( $args ) {
 	$dad_list = get_option('dad_list');
 	if(!isset($dad_list) || !is_array($dad_list)) {
 	$list = array(
-	'Option one',
-	'Option two',
-	'Option three',
-	'Option four',
-	'Option five',
-	'Option six',
+	'Facebook',
+	'Twiiter',
+	'Google+',
+	'Pinterest',
+	'LinkedIn',
+	'What\'sApp',
 	);
 	add_option('dad_list', $list);
 	}
@@ -312,30 +312,35 @@ function yass_field_active_networks_cb( $args ) {
 	global $dad_list;
 
 
-	ob_start(); ?>
+	ob_start();
+	d($options);
+	?>
 	<div class="wrap">
-		<h2><?php _e('Drag and Drop Example', 'pippin'); ?></h2>
-
 		<table class="wp-list-table widefat fixed posts dad-list">
 			<thead>
 			<tr>
-				<th><?php _e('Name', 'pippin'); ?></th>
-				<th><?php _e('Order', 'pippin'); ?></th>
+				<th><?php _e('Network', 'ya-social-share'); ?></th>
+				<th><?php _e('Order', 'ya-social-share'); ?></th>
+				<th><?php _e('Active', 'ya-social-share'); ?></th>
 			</tr>
 			</thead>
-			<tfoot>
-			<tr>
-				<th><?php _e('Name', 'pippin'); ?></th>
-				<th><?php _e('Order', 'pippin'); ?></th>
-			</tr>
-			</tfoot>
 			<tbody>
 			<?php
 			$count = 0;
 			foreach($dad_list as $key => $item) :
+
 				echo '<tr id="list_items_' . $key . '" class="list_item">';
 				echo '<td>' . $item . '</td>';
 				echo '<td>' . $count . '</td>';
+				echo '<td>';
+				?>
+				<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_fb' ); ?>"
+				       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
+				       name="yass_options[<?= esc_attr( $args['label_for'] . '_fb' ); ?>]"
+				       value="1" <?php checked( 1, $is_checked_fb, true ); ?>/>
+				<label for="<?= esc_attr( $args['label_for'] . '_fb' ); ?>">Facebook</label>
+				<?php
+				echo'</td>';
 				echo '</tr>';
 				$count++;
 			endforeach;
