@@ -3,7 +3,7 @@
 
   $(function () {
 
-    console.log('js loaded');
+    $('.post-thumbnail').css('position', 'relative');
 
   });
 

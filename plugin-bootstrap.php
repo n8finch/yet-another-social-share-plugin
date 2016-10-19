@@ -121,8 +121,6 @@ function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
 		'jquery-ui-sortable'
 	), false, false );
 
-	wp_localize_script( 'included-js-admin', 'yassAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-
 }
 
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts_to_admin' );
