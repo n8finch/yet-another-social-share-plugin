@@ -14,48 +14,60 @@ namespace YetAnotherSocialShare\Custom;
 
 $yass_options = get_option( 'yass_options' );
 
-add_action('wp_head', __NAMESPACE__ . '\template_check');
-function template_check() {
-//	d(is_page());
-//	ddd(is_singular('post'));
-}
-
-//Display YASS only if it is selected as active
 if ( $yass_options['yass_field_activate'] === 'activate' ) {
+	add_action( 'wp_head', __NAMESPACE__ . '\post_type_check' );
+	yass_display_social_left($yass_options);
+}
+function post_type_check() {
 
-	//TODO loop through active public post type array, for each, if the key exists, display the below
+	$public_post_types = get_post_types( array( "public" => true ) );
+	$yass_options = get_option( 'yass_options' );
 
+	foreach ( $public_post_types as $post_type ) {
 
-	$display_left = array_key_exists('yass_field_sharing_location_floating_left', $yass_options);
-	if ( $display_left  ) {
-		add_action( 'wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left' );
+		$post_type_exists = array_key_exists( 'yass_field_post_types_' . $post_type, $yass_options );
+		if ( is_singular( $post_type ) && $post_type_exists) {
+			yass_display_under_title($yass_options);
+			yass_display_on_featured_image($yass_options);
+			yass_display_after_content($yass_options);
+		}
 	}
 
-	$display_under_title = array_key_exists('yass_field_sharing_location_below_post_title', $yass_options);
+}
+
+function yass_display_social_left($yass_options) {
+	$display_left = array_key_exists( 'yass_field_sharing_location_floating_left', $yass_options );
+	if ( $display_left ) {
+		add_action( 'wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left' );
+	}
+}
+function yass_display_under_title($yass_options) {
+	$display_under_title = array_key_exists( 'yass_field_sharing_location_below_post_title', $yass_options );
 
 	if ( $display_under_title ) {
 		add_filter( 'the_title', __NAMESPACE__ . '\add_yass_social_icons_below_post_title' );
 	}
+}
 
-	$display_on_featured_image = array_key_exists('yass_field_sharing_location_inside_feature_image', $yass_options);
+function yass_display_on_featured_image($yass_options) {
+	$display_on_featured_image = array_key_exists( 'yass_field_sharing_location_inside_feature_image', $yass_options );
 
 	if ( $display_on_featured_image ) {
-		add_filter( 'post_thumbnail_html', __NAMESPACE__ . '\add_yass_social_icons_inside_featured_image');
+		add_filter( 'post_thumbnail_html', __NAMESPACE__ . '\add_yass_social_icons_inside_featured_image' );
 	}
-
-	$display_after_content = array_key_exists('yass_field_sharing_location_after_post_content', $yass_options);
-
-	if ($display_after_content)
-	add_filter( 'the_content', __NAMESPACE__ . '\add_yass_social_icons_below_post_content' );
 }
+
+function yass_display_after_content($yass_options) {
+	$display_after_content = array_key_exists( 'yass_field_sharing_location_after_post_content', $yass_options );
+
+	if ( $display_after_content ) {
+		add_filter( 'the_content', __NAMESPACE__ . '\add_yass_social_icons_below_post_content' );
+	}
+}
+
 
 /**
  * Build the Social Sharing Icons
- *
- * @param $yass_options
- * @param $yass_size_option
- * @param $yass_color_option
- * @param $dad_list
  *
  * @return string
  */
@@ -144,27 +156,32 @@ function add_yass_social_icons_floating_left() {
 //Add social sharing to below post title
 function add_yass_social_icons_below_post_title( $content ) {
 
+	if ( is_admin() ) {
+		return $content;
+	} else {
 		$yass_icons = build_the_yass_icons();
 		$content    = $content . $yass_icons;
+	}
 
 	return $content;
 
 }
 
 //Add social sharing to featured image
-function add_yass_social_icons_inside_featured_image($html) {
+function add_yass_social_icons_inside_featured_image( $html ) {
 
-	$yass_icons  = '<div class="yass-featured-image-overlay">';
+	$yass_icons = '<div class="yass-featured-image-overlay">';
 	$yass_icons .= build_the_yass_icons();
 	$yass_icons .= '</div>';
+
 	return $html . $yass_icons;
 }
 
 //Add social sharing to below post content
-function add_yass_social_icons_below_post_content($content) {
+function add_yass_social_icons_below_post_content( $content ) {
 
-		$yass_icons = build_the_yass_icons();
-		$content      = $content . $yass_icons;
+	$yass_icons = build_the_yass_icons();
+	$content    = $content . $yass_icons;
 
 	return $content;
 }
@@ -175,4 +192,4 @@ function add_yass_social_icons_shortcode() {
 	return build_the_yass_icons();
 }
 
-add_shortcode( 'yass-share', __NAMESPACE__ . '\add_yass_social_icons_shortcode');
+add_shortcode( 'yass-share', __NAMESPACE__ . '\add_yass_social_icons_shortcode' );
