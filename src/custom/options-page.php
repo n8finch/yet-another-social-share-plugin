@@ -53,7 +53,8 @@ function default_dad_list() {
 		'li' => 'LinkedIn',
 		'wa' => 'What\'sApp',
 	);
-	return apply_filters( 'yass_dad_default_options', $dad_defautls);
+
+	return apply_filters( 'yass_dad_default_options', $dad_defautls );
 }
 
 /**
@@ -287,11 +288,11 @@ function yass_field_active_networks_cb( $args ) {
 
 	$yass_active_array = array();
 
-	foreach($dad_list as $key => $value) {
+	foreach ( $dad_list as $key => $value ) {
 		if ( array_key_exists( 'yass_field_active_networks_' . $key, $options ) ) {
-			$yass_active_array[$key] = $options['yass_field_active_networks_' . $key];
+			$yass_active_array[ $key ] = $options[ 'yass_field_active_networks_' . $key ];
 		} else {
-			$yass_active_array[$key] = '';
+			$yass_active_array[ $key ] = '';
 		}
 	}
 
@@ -302,15 +303,15 @@ function yass_field_active_networks_cb( $args ) {
 		<table class="wp-list-table widefat fixed posts dad-list">
 			<thead>
 			<tr>
-				<th><?php _e('Network', 'ya-social-share'); ?></th>
-				<th><?php _e('Order', 'ya-social-share'); ?></th>
-				<th><?php _e('Active', 'ya-social-share'); ?></th>
+				<th><?php _e( 'Network', 'ya-social-share' ); ?></th>
+				<th><?php _e( 'Order', 'ya-social-share' ); ?></th>
+				<th><?php _e( 'Active', 'ya-social-share' ); ?></th>
 			</tr>
 			</thead>
 			<tbody>
 			<?php
 			$count = 0;
-			foreach($dad_list as $key => $item) :
+			foreach ( $dad_list as $key => $item ) :
 
 				echo '<tr id="list_items_' . $key . '" class="list_item">';
 				echo '<td>' . $item . '</td>';
@@ -320,12 +321,12 @@ function yass_field_active_networks_cb( $args ) {
 				<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"
 				       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 				       name="yass_options[<?= esc_attr( $args['label_for'] . '_' . $key ); ?>]"
-				       value="1" <?php checked( 1, $yass_active_array[$key], true ); ?>/>
+				       value="1" <?php checked( 1, $yass_active_array[ $key ], true ); ?>/>
 				<label for="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"></label>
 				<?php
-				echo'</td>';
+				echo '</td>';
 				echo '</tr>';
-				$count++;
+				$count ++;
 			endforeach;
 			?>
 			</tbody>
@@ -514,6 +515,14 @@ function yass_field_sharing_location_cb( $args ) {
 		$inside_feature_image = '';
 	}
 	?>
+	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>"
+	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
+	       name="yass_options[<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>]"
+	       value="1" <?php checked( 1, $floating_left, true ); ?>/>
+
+	<label
+		for="<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>"><?= esc_html( 'Floating Left (will display on every page, regardless of post type selection above)', 'yass' ); ?></label>
+	<br/>
 
 	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_below_post_title' ); ?>"
 	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
@@ -522,22 +531,7 @@ function yass_field_sharing_location_cb( $args ) {
 
 	<label
 		for="<?= esc_attr( $args['label_for'] . '_below_post_title' ); ?>"><?= esc_html( 'Below post title', 'yass' ); ?></label>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>]"
-	       value="1" <?php checked( 1, $floating_left, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_floating_left' ); ?>"><?= esc_html( 'Floating Left', 'yass' ); ?></label>
-
-	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>"
-	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-	       name="yass_options[<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>]"
-	       value="1" <?php checked( 1, $after_post_content, true ); ?>/>
-
-	<label
-		for="<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>"><?= esc_html( 'After post content', 'yass' ); ?></label>
+	<br/>
 
 	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_inside_feature_image' ); ?>"
 	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
@@ -546,6 +540,15 @@ function yass_field_sharing_location_cb( $args ) {
 
 	<label
 		for="<?= esc_attr( $args['label_for'] . '_inside_feature_image' ); ?>"><?= esc_html( 'Inside Feature Image', 'yass' ); ?></label>
+	<br/>
+
+	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>"
+	       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
+	       name="yass_options[<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>]"
+	       value="1" <?php checked( 1, $after_post_content, true ); ?>/>
+
+	<label
+		for="<?= esc_attr( $args['label_for'] . '_after_post_content' ); ?>"><?= esc_html( 'After post content', 'yass' ); ?></label><br/>
 
 	<?php
 } //end yass_field_sharing_location_cb
