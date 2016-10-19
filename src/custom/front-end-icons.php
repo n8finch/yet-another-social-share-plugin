@@ -17,11 +17,20 @@ $yass_options = get_option( 'yass_options' );
 //Bail out if plugin is deactivated
 if ( $yass_options['yass_field_activate'] === 'activate' ) {
 
+	$display_left = array_key_exists('yass_field_sharing_location_floating_left', $yass_options);
+	if ( $display_left  ) {
+		add_action( 'wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left' );
+	}
 
-	add_action( 'wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left' );
-	if ( is_single('post') ) {
+	$display_left = array_key_exists('yass_field_sharing_location_floating_left', $yass_options);
+
+	if ( is_single() ) {
 		add_filter( 'the_title', __NAMESPACE__ . '\add_yass_social_icons_below_post_title' );
 	}
+
+
+	$display_left = array_key_exists('yass_field_sharing_location_floating_left', $yass_options);
+
 	add_filter( 'the_content', __NAMESPACE__ . '\add_yass_social_icons_below_post_content' );
 }
 
@@ -146,5 +155,7 @@ function add_yass_social_icons_below_post_content($content) {
 
 //Add social sharing shortcode
 function add_yass_social_icons_shortcode() {
-
+	return build_the_yass_icons();
 }
+
+add_shortcode( 'yass-share', __NAMESPACE__ . '\add_yass_social_icons_shortcode');
