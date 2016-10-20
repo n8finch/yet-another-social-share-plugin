@@ -95,7 +95,7 @@
 }
 
 /*
- *  YASS Plugin Styles
+ *  YASS Frontend Plugin Styles
  *
  */
 .yass-social-div {
@@ -121,8 +121,13 @@ div.yass-float-left > .yass-social-div {
     position: absolute;
     left: 0;
     bottom: 0;
+    opacity: .5;
+    transition: opacity .5s;
 }
 
+.yass-featured-image-overlay:hover {
+    opacity: 1;
+}
 
 /**
  * Don't display in header, footer, comments or sidebar

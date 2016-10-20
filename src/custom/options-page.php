@@ -205,7 +205,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\yass_settings_init' );
 
 function yass_intro_section_cb( $args ) {
 	?>
-	<p id="<?= esc_attr( $args['id'] ); ?>"><?= esc_html__( 'Configure your social sharing experience here.', 'ya-social-share' ); ?></p>
+	<p id="<?= esc_attr( $args['id'] ); ?>"><?= __( 'Configure your social sharing experience here.<br/>If you would like to use a shortcode to display the social sharing buttons in your website content,<br/>you can use the <code>[yass-share]</code>, and the butttons will appear.', 'ya-social-share' ); ?></p>
 	<?php
 }
 
@@ -299,12 +299,12 @@ function yass_field_active_networks_cb( $args ) {
 
 	ob_start();
 	?>
+	<p>Drag the networks into the order you would like. To activate them, check the box.</p>
 	<div class="wrap">
-		<table class="wp-list-table widefat fixed posts dad-list">
+		<table class="wp-list-table dad-list">
 			<thead>
 			<tr>
 				<th><?php _e( 'Network', 'ya-social-share' ); ?></th>
-				<th><?php _e( 'Order', 'ya-social-share' ); ?></th>
 				<th><?php _e( 'Active', 'ya-social-share' ); ?></th>
 			</tr>
 			</thead>
@@ -314,8 +314,7 @@ function yass_field_active_networks_cb( $args ) {
 			foreach ( $dad_list as $key => $item ) :
 
 				echo '<tr id="list_items_' . $key . '" class="list_item">';
-				echo '<td>' . $item . '</td>';
-				echo '<td>' . $count . '</td>';
+				echo '<td><span class="fa fa-unsorted"/></span> ' . $item . '</td>';
 				echo '<td>';
 				?>
 				<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"

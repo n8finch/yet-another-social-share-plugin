@@ -1,24 +1,8 @@
-#sortable {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 60%;
+table.dad-list th{
+    padding-top: 0;
 }
 
-#sortable .yass_list_item {
-    cursor: move;
+table.dad-list td {
+    padding: 10px;
 }
 
-#sortable li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    height: 1.5em;
-    line-height: 1.2em;
-    cursor: move;
-}
-
-.ui-state-highlight {
-    height: 1.5em;
-    line-height: 1.2em;
-}
