@@ -11,14 +11,22 @@
         opacity: 0.6,
         cursor: 'move',
         axis: 'y',
-        update: function() {
+        update: function () {
           var order = $(this).sortable('serialize') + '&action=dad_update_order';
-          $.post(ajaxurl, order, function(response) {
+          $.post(ajaxurl, order, function (response) {
             // success, maybe alert the user
           });
         }
 
       });
+    });
+
+    //Color Pickers
+    $('#yass_field_custom_icon_color').iris({
+      palettes: true
+    });
+    $('#yass_field_custom_background_color').iris({
+      palettes: true
     });
 
     //Cache Icon Color Rows
@@ -28,7 +36,7 @@
     var yass_background_color_row = $('.yass-row-custom-background-color');
 
 
-    if($(yass_color_custom).is(':checked')) {
+    if ($(yass_color_custom).is(':checked')) {
       $(yass_icon_color_row).show();
       $(yass_background_color_row).show();
     } else {
@@ -36,15 +44,15 @@
       $(yass_background_color_row).hide();
     }
 
-    $(yass_color_custom).on('click', function() {
-      if($(yass_color_custom).is(':checked')) {
+    $(yass_color_custom).on('click', function () {
+      if ($(yass_color_custom).is(':checked')) {
         $(yass_icon_color_row).show();
         $(yass_background_color_row).show();
       }
     });
 
-    $(yass_color_default).on('click', function() {
-      if($(yass_color_default).is(':checked')) {
+    $(yass_color_default).on('click', function () {
+      if ($(yass_color_default).is(':checked')) {
         $(yass_icon_color_row).hide();
         $(yass_background_color_row).hide();
       }

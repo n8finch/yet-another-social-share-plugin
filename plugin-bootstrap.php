@@ -116,9 +116,13 @@ function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
 	wp_enqueue_style( 'included-styles-admin', YASS_URL . 'css/included_styles_admin.css' );
 	wp_enqueue_script( 'included-js-admin', YASS_URL . 'js/included_js_admin.js', array(
 		'jquery',
+		'jquery-ui-core',
 		'jquery-ui-draggable',
 		'jquery-ui-droppable',
-		'jquery-ui-sortable'
+		'jquery-ui-slider',
+		'jquery-ui-widget',
+		'jquery-ui-sortable',
+		'iris'
 	), false, false );
 
 }
