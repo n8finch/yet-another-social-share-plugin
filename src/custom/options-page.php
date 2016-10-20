@@ -250,6 +250,7 @@ function yass_field_post_types_cb( $args ) {
 
 	$public_post_types = get_post_types( array( "public" => true ) );
 
+
 	foreach ( $public_post_types as $post_type ) {
 
 		if ( array_key_exists( 'yass_field_post_types_' . $post_type, $options ) ) {
@@ -257,16 +258,19 @@ function yass_field_post_types_cb( $args ) {
 		} else {
 			$is_checked = '';
 		}
-		?>
-		<input type="checkbox" id="<?= esc_attr( $args['label_for'] . $post_type ); ?>"
-		       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
-		       name="yass_options[<?= esc_attr( $args['label_for'] . $post_type ); ?>]"
-		       value="1" <?php checked( 1, $is_checked, true ); ?>/>
 
-		<label
-			for="<?= esc_attr( $args['label_for'] . $post_type ); ?>"><?= esc_html( ucfirst( $post_type ), 'yass' ); ?></label>
+		if ( $post_type != "attachment" ) {
+			?>
+			<input type="checkbox" id="<?= esc_attr( $args['label_for'] . $post_type ); ?>"
+			       data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
+			       name="yass_options[<?= esc_attr( $args['label_for'] . $post_type ); ?>]"
+			       value="1" <?php checked( 1, $is_checked, true ); ?>/>
 
-		<?php
+			<label
+				for="<?= esc_attr( $args['label_for'] . $post_type ); ?>"><?= esc_html( ucfirst( $post_type ), 'yass' ); ?></label>
+
+			<?php
+		}
 	}
 
 } // end yass_field_post_types_cb
