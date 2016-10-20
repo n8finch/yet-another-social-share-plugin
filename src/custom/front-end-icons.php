@@ -16,32 +16,33 @@ $yass_options = get_option( 'yass_options' );
 
 if ( $yass_options['yass_field_activate'] === 'activate' ) {
 	add_action( 'wp_head', __NAMESPACE__ . '\post_type_check' );
-	yass_display_social_left($yass_options);
+	yass_display_social_left( $yass_options );
 }
 function post_type_check() {
 
 	$public_post_types = get_post_types( array( "public" => true ) );
-	$yass_options = get_option( 'yass_options' );
+	$yass_options      = get_option( 'yass_options' );
 
 	foreach ( $public_post_types as $post_type ) {
 
 		$post_type_exists = array_key_exists( 'yass_field_post_types_' . $post_type, $yass_options );
-		if ( is_singular( $post_type ) && $post_type_exists) {
-			yass_display_under_title($yass_options);
-			yass_display_on_featured_image($yass_options);
-			yass_display_after_content($yass_options);
+		if ( is_singular( $post_type ) && $post_type_exists ) {
+			yass_display_under_title( $yass_options );
+			yass_display_on_featured_image( $yass_options );
+			yass_display_after_content( $yass_options );
 		}
 	}
 
 }
 
-function yass_display_social_left($yass_options) {
+function yass_display_social_left( $yass_options ) {
 	$display_left = array_key_exists( 'yass_field_sharing_location_floating_left', $yass_options );
 	if ( $display_left ) {
 		add_action( 'wp_footer', __NAMESPACE__ . '\add_yass_social_icons_floating_left' );
 	}
 }
-function yass_display_under_title($yass_options) {
+
+function yass_display_under_title( $yass_options ) {
 	$display_under_title = array_key_exists( 'yass_field_sharing_location_below_post_title', $yass_options );
 
 	if ( $display_under_title ) {
@@ -49,7 +50,7 @@ function yass_display_under_title($yass_options) {
 	}
 }
 
-function yass_display_on_featured_image($yass_options) {
+function yass_display_on_featured_image( $yass_options ) {
 	$display_on_featured_image = array_key_exists( 'yass_field_sharing_location_inside_feature_image', $yass_options );
 
 	if ( $display_on_featured_image ) {
@@ -57,7 +58,7 @@ function yass_display_on_featured_image($yass_options) {
 	}
 }
 
-function yass_display_after_content($yass_options) {
+function yass_display_after_content( $yass_options ) {
 	$display_after_content = array_key_exists( 'yass_field_sharing_location_after_post_content', $yass_options );
 
 	if ( $display_after_content ) {
@@ -111,26 +112,35 @@ function build_the_yass_icons() {
 
 		if ( in_array( $key, $yass_active_array ) ) {
 
+			global $post;
+
+			$fb_link = 'href="http://www.facebook.com/sharer.php?u=' . get_permalink( $post->ID ) . '" target="_blank"';
+			$tw_link = 'href="https://twitter.com/intent/tweet?url=' . get_permalink( $post->ID ) . '" target="_blank"';
+			$go_link = 'href="https://plus.google.com/share?url=' . get_permalink( $post->ID ) . '" target="_blank"';
+			$pi_link = 'data-pin-do="buttonPin" data-pin-count="above" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fakgoods.com&media=' . wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) ) . '&description=Check%20this%20out!" target="_blank"';
+			$li_link = 'href="https://www.linkedin.com/shareArticle?mini=true&url=' . get_permalink( $post->ID ) . '&title=' . get_the_title( $post->ID ) . '" target="_blank"';
+			$wa_link = 'href="whatsapp://send?text=' . get_permalink( $post->ID ) . '" data-action="share/whatsapp/share" target="_blank"';
+
 			switch ( $key ) {
 
 				case 'fb':
-					$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-facebook" ' . $yass_color_option . '></span>';
+					$html .= '<a ' . $fb_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-facebook" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'tw':
-					$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-twitter" ' . $yass_color_option . '></span>';
+					$html .= '<a ' . $tw_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-twitter" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'go':
-					$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-google-plus" ' . $yass_color_option . '></span>';
+					$html .= '<a ' . $go_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-google-plus" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'pi':
-					$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-pinterest" ' . $yass_color_option . '></span>';
+					$html .= '<a ' . $pi_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-pinterest" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'li':
-					$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-linkedin" ' . $yass_color_option . '></span>';
+					$html .= '<a ' . $li_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-linkedin" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'wa':
 					if ( wp_is_mobile() ) {
-						$html .= '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-whatsapp" ' . $yass_color_option . '></span>';
+						$html .= '<a ' . $wa_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-whatsapp" ' . $yass_color_option . '></span></a>';
 					} //end wp_is_mobile
 			} // end switch
 		} // end if statement
