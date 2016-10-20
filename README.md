@@ -22,6 +22,7 @@ The goal is to create a plugin that will automatically display selected social n
 Support for the following social networks is required: Facebook, Twitter, Google+, Pinterest, LinkedIn, Whatsapp (for mobile browsers only).
 
 The plugin options page must include the following configurable items:
+
 1. The choice to display on posts / pages / other registered custom post types
 2. Options to activate / deactivate the buttons for different social networks
 3. Three different button sizes to choose from (small / medium / large)
