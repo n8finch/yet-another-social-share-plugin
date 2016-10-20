@@ -101,6 +101,11 @@
     padding: 10px;
 }
 
+.yass-social-div a,
+.entry-title .yass-social-div  a{
+    color: transparent;
+}
+
 .yass-icon-default {
     padding: 15px !important;
     border-radius: 100%;

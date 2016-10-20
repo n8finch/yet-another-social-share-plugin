@@ -26,7 +26,7 @@ function yass_default_options() {
 		'yass_field_active_networks_pi'                   => '1',
 		'yass_field_active_networks_li'                   => '1',
 		'yass_field_active_networks_wa'                   => '1',
-		'yass_field_icon_size'                            => 'medium',
+		'yass_field_icon_size'                            => 'small',
 		'yass_field_button_colors'                        => 'default',
 		'yass_field_button_colors_custom_icon'            => '#000000',
 		'yass_field_button_colors_custom_background'      => '#ffffff',

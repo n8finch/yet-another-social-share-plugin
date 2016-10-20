@@ -133,23 +133,23 @@ function build_the_yass_icons() {
 			switch ( $key ) {
 
 				case 'fb':
-					$html .= '<a ' . $fb_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-facebook" ' . $yass_color_option . '></span></a>';
+					$html .= '<a ' . $fb_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-facebook" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'tw':
-					$html .= '<a ' . $tw_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-twitter" ' . $yass_color_option . '></span></a>';
+					$html .= '<a ' . $tw_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-twitter" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'go':
-					$html .= '<a ' . $go_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-google-plus" ' . $yass_color_option . '></span></a>';
+					$html .= '<a ' . $go_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-google-plus" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'pi':
-					$html .= '<a ' . $pi_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-pinterest" ' . $yass_color_option . '></span></a>';
+					$html .= '<a ' . $pi_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-pinterest" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'li':
-					$html .= '<a ' . $li_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-linkedin" ' . $yass_color_option . '></span></a>';
+					$html .= '<a ' . $li_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-linkedin" ' . $yass_color_option . '></span></a>';
 					break;
 				case 'wa':
 					if ( wp_is_mobile() ) {
-						$html .= '<a ' . $wa_link . '<span class="yass-icon-default ' . $yass_size_option . ' fa fa-whatsapp" ' . $yass_color_option . '></span></a>';
+						$html .= '<a ' . $wa_link . '><span class="yass-icon-default ' . $yass_size_option . ' fa fa-whatsapp" ' . $yass_color_option . '></span></a>';
 					} //end wp_is_mobile
 			} // end switch
 		} // end if statement
