@@ -36,7 +36,6 @@
     min-width: 60px;
 }
 
-
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 
@@ -117,11 +116,11 @@ div.yass-float-left > .yass-social-div {
     z-index: 999999999;
 }
 
-.yass-overlay {
+.yass-featured-image-overlay {
     position: relative;
 }
 
-.yass-featured-image-overlay {
+.yass-featured-image-overlay .yass-social-div {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -129,7 +128,7 @@ div.yass-float-left > .yass-social-div {
     transition: opacity .5s;
 }
 
-.yass-featured-image-overlay:hover {
+.yass-featured-image-overlay .yass-social-div:hover {
     opacity: 1;
 }
 
@@ -143,7 +142,6 @@ footer .yass-social-div,
 .comments-area .yass-social-div {
     display: none;
 }
-
 
 @media only screen and (max-width: 800px) {
     div.yass-float-left > .yass-social-div {

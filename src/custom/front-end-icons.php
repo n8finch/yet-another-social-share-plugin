@@ -189,13 +189,14 @@ function add_yass_social_icons_below_post_title( $content ) {
 //Add social sharing to featured image
 function add_yass_social_icons_inside_featured_image( $html ) {
 
-//	$yass_icons = '<div class="yass-featured-image-overlay">';
-//	$yass_icons .= build_the_yass_icons();
-//	$yass_icons .= '</div>';
-//
-//	return $html . $yass_icons;
-	
-	return $html;
+	$post_thumbnail = $html;
+
+	$yass_icons = '<div class="yass-featured-image-overlay">';
+	$yass_icons .= $post_thumbnail;
+	$yass_icons .= build_the_yass_icons();
+	$yass_icons .= '</div>';
+
+	return $yass_icons;
 }
 
 //Add social sharing to below post content
