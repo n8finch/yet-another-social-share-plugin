@@ -92,14 +92,6 @@ function yass_init_autoloader() {
 function yass_add_these_plugin_styles_and_scripts() {
 	//enqueue main styles and scripts
 	wp_enqueue_style( 'included-styles', YASS_URL . 'css/included_styles.css' );
-	wp_enqueue_script( 'included-js', YASS_URL . 'js/included_js.js', array(
-		'jquery'
-	), false, false );
-
-	wp_localize_script( 'included-js', 'yass_icons', array(
-		'icons' => \YetAnotherSocialShare\Custom\build_the_yass_icons(),
-		'home'  => ( is_singular() ? true : false )
-	) );
 }
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts' );

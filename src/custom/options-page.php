@@ -205,7 +205,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\yass_settings_init' );
 
 function yass_intro_section_cb( $args ) {
 	?>
-	<p id="<?= esc_attr( $args['id'] ); ?>"><?= __( 'Configure your social sharing experience here.<br/>If you would like to use a shortcode to embed the social sharing buttons in your website content,<br/>you can use the <code>[yass-share]</code>, and the butttons will appear.', 'ya-social-share' ); ?></p>
+	<p id="<?= esc_attr( $args['id'] ); ?>"><?= __( 'Configure your social sharing experience here.<br/>If you would like to use a shortcode to embed the social sharing buttons in your website content,<br/>you can use the <code>[yass-share]</code>, and the butttons will appear.<br/>The only sharing icons that will appear on your homepage are the icons that float left.', 'ya-social-share' ); ?></p>
 	<?php
 }
 
