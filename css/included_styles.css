@@ -103,7 +103,7 @@
 }
 
 .yass-icon-default {
-    padding: 15px;
+    padding: 15px !important;
     border-radius: 100%;
     margin: 1px;
     text-decoration: none;
@@ -115,6 +115,10 @@ div.yass-float-left > .yass-social-div {
     left: 10px;
     bottom: 50px;
     z-index: 999999999;
+}
+
+.yass-overlay {
+    position: relative;
 }
 
 .yass-featured-image-overlay {

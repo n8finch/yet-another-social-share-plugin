@@ -17,6 +17,7 @@ $yass_options = get_option( 'yass_options' );
 if ( $yass_options['yass_field_activate'] === 'activate' ) {
 	add_action( 'wp_head', __NAMESPACE__ . '\post_type_check' );
 	yass_display_social_left( $yass_options );
+
 }
 function post_type_check() {
 
@@ -24,7 +25,6 @@ function post_type_check() {
 	$yass_options      = get_option( 'yass_options' );
 
 	foreach ( $public_post_types as $post_type ) {
-
 		$post_type_exists = array_key_exists( 'yass_field_post_types_' . $post_type, $yass_options );
 		if ( is_singular( $post_type ) && $post_type_exists ) {
 			yass_display_under_title( $yass_options );
@@ -43,6 +43,7 @@ function yass_display_social_left( $yass_options ) {
 }
 
 function yass_display_under_title( $yass_options ) {
+
 	$display_under_title = array_key_exists( 'yass_field_sharing_location_below_post_title', $yass_options );
 
 	if ( $display_under_title ) {
@@ -87,6 +88,7 @@ function build_the_yass_icons() {
 		$yass_color_option = 'style="color: ' . $yass_options['yass_field_custom_icon_color'] . '; background-color: ' . $yass_options['yass_field_custom_background_color'] . ';"';
 	}
 
+
 	//Size
 	if ( $yass_options['yass_field_icon_size'] === 'medium' ) {
 		$yass_size_option = 'fa-2x';
@@ -107,19 +109,26 @@ function build_the_yass_icons() {
 		}
 	}
 
-
 	foreach ( $dad_list as $key => $value ) {
 
 		if ( in_array( $key, $yass_active_array ) ) {
 
 			global $post;
 
-			$fb_link = 'href="http://www.facebook.com/sharer.php?u=' . get_permalink( $post->ID ) . '" target="_blank"';
-			$tw_link = 'href="https://twitter.com/intent/tweet?url=' . get_permalink( $post->ID ) . '" target="_blank"';
-			$go_link = 'href="https://plus.google.com/share?url=' . get_permalink( $post->ID ) . '" target="_blank"';
-			$pi_link = 'data-pin-do="buttonPin" data-pin-count="above" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fakgoods.com&media=' . wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) ) . '&description=Check%20this%20out!" target="_blank"';
-			$li_link = 'href="https://www.linkedin.com/shareArticle?mini=true&url=' . get_permalink( $post->ID ) . '&title=' . get_the_title( $post->ID ) . '" target="_blank"';
-			$wa_link = 'href="whatsapp://send?text=' . get_permalink( $post->ID ) . '" data-action="share/whatsapp/share" target="_blank"';
+			$post_permalink = get_permalink( $post->ID );
+			$post_title = $post->ID;
+			$post_attachment_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+
+			$fb_link = 'href="http://www.facebook.com/sharer.php?u=' . $post_permalink . '" target="_blank"';
+			$tw_link = 'href="https://twitter.com/intent/tweet?url=' . $post_permalink . '" target="_blank"';
+			$go_link = 'href="https://plus.google.com/share?url=' . $post_permalink . '" target="_blank"';
+			$pi_link = 'data-pin-do="buttonPin" data-pin-count="above" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fakgoods.com&media=' . $post_attachment_url . '&description=Check%20this%20out!" target="_blank"';
+			$li_link = 'href="https://www.linkedin.com/shareArticle?mini=true&url=' . $post_permalink . '&title=' . $post_title . '" target="_blank"';
+			$wa_link = 'href="whatsapp://send?text=' . $post_permalink . '" data-action="share/whatsapp/share" target="_blank"';
+
+
+
+
 
 			switch ( $key ) {
 
@@ -180,11 +189,13 @@ function add_yass_social_icons_below_post_title( $content ) {
 //Add social sharing to featured image
 function add_yass_social_icons_inside_featured_image( $html ) {
 
-	$yass_icons = '<div class="yass-featured-image-overlay">';
-	$yass_icons .= build_the_yass_icons();
-	$yass_icons .= '</div>';
-
-	return $html . $yass_icons;
+//	$yass_icons = '<div class="yass-featured-image-overlay">';
+//	$yass_icons .= build_the_yass_icons();
+//	$yass_icons .= '</div>';
+//
+//	return $html . $yass_icons;
+	
+	return $html;
 }
 
 //Add social sharing to below post content

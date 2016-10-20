@@ -205,7 +205,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\yass_settings_init' );
 
 function yass_intro_section_cb( $args ) {
 	?>
-	<p id="<?= esc_attr( $args['id'] ); ?>"><?= __( 'Configure your social sharing experience here.<br/>If you would like to use a shortcode to display the social sharing buttons in your website content,<br/>you can use the <code>[yass-share]</code>, and the butttons will appear.', 'ya-social-share' ); ?></p>
+	<p id="<?= esc_attr( $args['id'] ); ?>"><?= __( 'Configure your social sharing experience here.<br/>If you would like to use a shortcode to embed the social sharing buttons in your website content,<br/>you can use the <code>[yass-share]</code>, and the butttons will appear.', 'ya-social-share' ); ?></p>
 	<?php
 }
 
@@ -222,15 +222,15 @@ function yass_field_active_cb( $args ) {
 	$options = get_option( 'yass_options' );
 
 	?>
-	<label for="<?= esc_attr( $args['label_for'] ); ?>">Would you like to activate the Social Sharing plugin?</label>
+	<label for="<?= esc_attr( $args['label_for'] ); ?>"><?php _e('Would you like to activate the Social Sharing plugin', 'ya-social-sharing') ?></label>
 	<select id="<?= esc_attr( $args['label_for'] ); ?>"
 	        data-custom="<?= esc_attr( $args['yass_custom_data'] ); ?>"
 	        name="yass_options[<?= esc_attr( $args['label_for'] ); ?>]">
 		<option
-			value="deactivate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'deactivate', false ) ) : ( '' ); ?>><?= esc_html( 'no', 'yass' ); ?>
+			value="deactivate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'deactivate', false ) ) : ( '' ); ?>><?= esc_html( 'no', 'ya-social-share' ); ?>
 		</option>
 		<option
-			value="activate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'activate', false ) ) : ( '' ); ?>><?= esc_html( 'yes', 'yass' ); ?>
+			value="activate" <?= isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'activate', false ) ) : ( '' ); ?>><?= esc_html( 'yes', 'ya-social-share' ); ?>
 		</option>
 
 	</select>

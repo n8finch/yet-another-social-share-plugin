@@ -96,7 +96,10 @@ function yass_add_these_plugin_styles_and_scripts() {
 		'jquery'
 	), false, false );
 
-
+	wp_localize_script( 'included-js', 'yass_icons', array(
+		'icons' => \YetAnotherSocialShare\Custom\build_the_yass_icons(),
+		'home'  => ( is_singular() ? true : false )
+	) );
 }
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_styles_and_scripts' );
@@ -116,11 +119,8 @@ function yass_add_these_plugin_styles_and_scripts_to_admin( $hook ) {
 	wp_enqueue_style( 'included-styles-admin', YASS_URL . 'css/included_styles_admin.css' );
 	wp_enqueue_script( 'included-js-admin', YASS_URL . 'js/included_js_admin.js', array(
 		'jquery',
-		'jquery-ui-core',
 		'jquery-ui-draggable',
 		'jquery-ui-droppable',
-		'jquery-ui-slider',
-		'jquery-ui-widget',
 		'jquery-ui-sortable',
 		'iris'
 	), false, false );
@@ -132,25 +132,26 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\yass_add_these_plugin_sty
 
 function dad_save_order() {
 
-	$dad_list = get_option('dad_list');
+	$dad_list = get_option( 'dad_list' );
 
-	$list = $dad_list;
+	$list      = $dad_list;
 	$new_order = $_POST['list_items'];
-	$new_list = array();
+	$new_list  = array();
 
 	// update order
-	foreach($new_order as $v) {
-		if(isset($list[$v])) {
-			$new_list[$v] = $list[$v];
+	foreach ( $new_order as $v ) {
+		if ( isset( $list[ $v ] ) ) {
+			$new_list[ $v ] = $list[ $v ];
 		}
 	}
 
 	// save the new order
-	update_option('dad_list', $new_list);
+	update_option( 'dad_list', $new_list );
 
 	die();
 }
-add_action('wp_ajax_dad_update_order', __NAMESPACE__ . '\dad_save_order');
+
+add_action( 'wp_ajax_dad_update_order', __NAMESPACE__ . '\dad_save_order' );
 
 /**
  * Launch the plugin
