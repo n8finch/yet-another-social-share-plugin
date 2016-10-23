@@ -318,7 +318,7 @@ function yass_field_active_networks_cb( $args ) {
 			foreach ( $dad_list as $key => $item ) :
 
 				echo '<tr id="list_items_' . $key . '" class="list_item">';
-				echo '<td><span class="fa fa-unsorted"/></span> ' . $item . '</td>';
+				echo '<td><span class="dashicons dashicons-sort"/></span> ' . $item . '</td>';
 				echo '<td>';
 				?>
 				<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_' . $key ); ?>"
@@ -533,7 +533,7 @@ function yass_field_sharing_location_cb( $args ) {
 	       value="1" <?php checked( 1, $below_post_title, true ); ?>/>
 
 	<label
-		for="<?= esc_attr( $args['label_for'] . '_below_post_title' ); ?>"><?= esc_html( 'Below post title', 'yass' ); ?></label>
+		for="<?= esc_attr( $args['label_for'] . '_below_post_title' ); ?>"><?= esc_html( 'Below post title, before content.', 'yass' ); ?></label>
 	<br/>
 
 	<input type="checkbox" id="<?= esc_attr( $args['label_for'] . '_inside_feature_image' ); ?>"

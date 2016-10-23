@@ -47,7 +47,7 @@ function yass_display_under_title( $yass_options ) {
 	$display_under_title = array_key_exists( 'yass_field_sharing_location_below_post_title', $yass_options );
 
 	if ( $display_under_title ) {
-		add_filter( 'the_title', __NAMESPACE__ . '\add_yass_social_icons_below_post_title' );
+		add_filter( 'the_content', __NAMESPACE__ . '\add_yass_social_icons_below_post_title' );
 	}
 }
 
@@ -175,12 +175,8 @@ function add_yass_social_icons_floating_left() {
 //Add social sharing to below post title
 function add_yass_social_icons_below_post_title( $content ) {
 
-	if ( is_admin() ) {
-		return $content;
-	} else {
-		$yass_icons = build_the_yass_icons();
-		$content    = $content . $yass_icons;
-	}
+	$yass_icons = build_the_yass_icons();
+	$content    = $yass_icons . $content;
 
 	return $content;
 
